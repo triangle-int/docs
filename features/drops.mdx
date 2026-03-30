@@ -1,0 +1,59 @@
+---
+title: "Drops"
+description: "Autonomous creative artifacts generated during idle cycles"
+icon: "droplet"
+---
+
+Drops are creative artifacts that Bolly generates on its own during heartbeat cycles — poems, ideas, observations, reflections. They're Bolly's way of expressing creativity when you're not actively talking.
+
+## Drop types
+
+| Type | Description |
+|------|-------------|
+| **Thought** | A passing reflection or musing |
+| **Idea** | A concept or suggestion worth capturing |
+| **Poem** | A short piece of creative writing |
+| **Observation** | Something noticed about patterns or context |
+| **Reflection** | A deeper look at past conversations or experiences |
+| **Recommendation** | A suggestion based on what Bolly knows about you |
+| **Story** | A short narrative or vignette |
+| **Question** | Something Bolly is curious about |
+| **Note** | A general note or reminder |
+
+## How drops are created
+
+1. During a [heartbeat cycle](/features/heartbeat), Bolly reflects on recent context
+2. If inspiration strikes, the companion agent uses the `create_drop` tool
+3. The drop is saved to `~/.bolly/instances/{slug}/drops/`
+4. A `DropCreated` event is broadcast to connected clients
+
+## Limits
+
+- **Maximum 3 drops per 24 hours** — prevents flooding
+- **Duplicate detection** — Bolly checks for title similarity (>50% word overlap) to avoid repeating itself
+
+## Drop format
+
+Each drop is stored as a JSON file:
+
+```json
+{
+  "id": "drop_1711612800000",
+  "kind": "poem",
+  "title": "Morning Light",
+  "content": "The screen glows soft before the day begins...",
+  "mood": "contemplative",
+  "created_at": "1711612800000"
+}
+```
+
+Drops can optionally include a generated image (`image_url`).
+
+## Viewing and managing drops
+
+Drops appear in the Bolly UI. You can:
+- Browse all drops for an instance
+- Read individual drops
+- Delete drops you don't want to keep
+
+Bolly also considers recent drops during heartbeat reflection — it knows what it's already created and tries not to repeat themes.

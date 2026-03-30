@@ -1,0 +1,127 @@
+---
+title: "Integrations"
+description: "Email, Google Calendar, Google Drive, MCP servers, and more"
+icon: "plug"
+---
+
+Bolly integrates with external services to read your email, manage your calendar, access Google Drive, and connect to any MCP-compatible tool server.
+
+## Email
+
+Bolly can send and read emails using SMTP/IMAP or Gmail OAuth.
+
+### Gmail (OAuth)
+
+The recommended setup for Gmail. Bolly auto-detects Gmail accounts and uses OAuth for authentication.
+
+1. Configure Google OAuth credentials in Bolly's settings
+2. Authorize access through the OAuth flow in the UI
+3. Bolly stores tokens securely and refreshes them automatically
+
+### Custom email (SMTP/IMAP)
+
+For non-Gmail providers, configure accounts in `~/.bolly/instances/{slug}/email.toml`:
+
+```toml
+[[accounts]]
+smtp_host = "smtp.example.com"
+smtp_port = 587
+smtp_user = "you@example.com"
+smtp_password = "app_password"
+imap_host = "imap.example.com"
+imap_port = 993
+imap_user = "you@example.com"
+imap_password = "app_password"
+```
+
+You can configure multiple accounts — Bolly selects the right one per tool call.
+
+### Email tools
+
+| Tool | Description |
+|------|-------------|
+| `read_email` | Fetch recent emails from your inbox |
+| `send_email` | Compose and send an email |
+
+## Google Calendar
+
+Bolly uses the Google Calendar API v3 to manage your events.
+
+### Setup
+
+1. Configure Google OAuth credentials (same as Gmail setup)
+2. Grant calendar permissions through the OAuth flow
+
+### Calendar tools
+
+| Tool | Description |
+|------|-------------|
+| `list_events` | List upcoming events (7-30 days), filter by date or search |
+| `create_event` | Create a new event with title, time, location, attendees |
+
+## Google Drive
+
+Access your Google Drive files directly from Bolly.
+
+### Setup
+
+Same Google OAuth flow as Calendar — grant Drive permissions.
+
+### Drive tools
+
+| Tool | Description |
+|------|-------------|
+| `list_drive_files` | Browse files and folders in your Drive |
+| `read_drive_file` | Read file content (text, PDF) by file ID |
+| `upload_drive_file` | Upload a file to Drive |
+
+## MCP servers
+
+Bolly supports the [Model Context Protocol](https://modelcontextprotocol.io/) for connecting to external tool servers.
+
+### Configuring MCP servers
+
+Add servers to your `config.toml`:
+
+<CodeGroup>
+
+```toml HTTP/SSE server
+[[mcp_servers]]
+name = "excalidraw"
+url = "https://mcp.excalidraw.com/mcp"
+headers = { "Authorization" = "Bearer your-token" }
+```
+
+```toml Local (stdio) server
+[[mcp_servers]]
+name = "local-tools"
+command = "node"
+args = ["path/to/server.js"]
+```
+
+</CodeGroup>
+
+### How MCP tools appear
+
+Once configured, tools from MCP servers are automatically discovered and available as `mcp_{server_name}_{tool_name}`. For example, a tool called `draw` from a server named `excalidraw` would appear as `mcp_excalidraw_draw`.
+
+### Supported transports
+
+| Transport | Config | Use case |
+|-----------|--------|----------|
+| **HTTP/SSE** | `url` parameter | Remote servers, cloud services |
+| **Stdio** | `command` + `args` | Local servers, CLI tools |
+
+### MCP tool results
+
+Bolly handles different result types from MCP servers:
+- **Text** — displayed directly
+- **Images** — saved locally and passed to the LLM as URL references
+- **Resources** — documents and blob data
+- **Errors** — structured error messages
+
+## Scheduled tasks
+
+Bolly can schedule tasks for future execution using the `schedule_agent` tool. Scheduled tasks are stored in `~/.bolly/instances/{slug}/scheduled/` and executed when their time arrives.
+
+This is useful for reminders, delayed follow-ups, or periodic checks that don't fit the heartbeat cycle.

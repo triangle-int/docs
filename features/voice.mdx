@@ -1,0 +1,35 @@
+---
+title: "Voice"
+description: "Text-to-speech output powered by ElevenLabs"
+icon: "volume-high"
+---
+
+Bolly can speak its responses aloud using ElevenLabs text-to-speech. Voice mode is optional and requires an [ElevenLabs API key](/installation/api-keys).
+
+## Setup
+
+1. Add your ElevenLabs API key through Bolly's settings in the browser
+2. Enable voice mode for your instance
+
+## Choosing a voice
+
+Bolly can use any ElevenLabs voice. You can change the voice through:
+
+- The `set_voice` tool — ask Bolly to "change your voice" and provide a voice ID
+- The settings UI in the web interface
+
+ElevenLabs offers 30+ preset voices with different characteristics (gender, accent, tone). You can also create custom voices on the [ElevenLabs platform](https://elevenlabs.io).
+
+## Per-instance voices
+
+Each Bolly instance can have a different voice. The voice ID is stored in the instance configuration and takes precedence over any global default.
+
+## How it works
+
+When voice mode is enabled:
+1. Bolly generates a text response as usual
+2. The text is sent to ElevenLabs TTS API
+3. An MP3 audio stream is returned
+4. The client plays the audio alongside the text response
+
+Voice is a companion to text — you always get the written response too.

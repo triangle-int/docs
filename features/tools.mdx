@@ -1,0 +1,140 @@
+---
+title: "Built-in Tools"
+description: "50+ tools for file operations, shell commands, web browsing, email, calendar, and more"
+icon: "wrench"
+---
+
+Bolly has over 50 built-in tools that it uses automatically during conversations. You don't need to invoke them directly — just ask Bolly to do something and it picks the right tools.
+
+## File operations
+
+| Tool | Description |
+|------|-------------|
+| `read_file` | Read any file on the system |
+| `write_file` | Create or overwrite a file |
+| `edit_file` | Edit specific lines in a file |
+| `list_files` | List directory contents with optional filtering |
+| `explore_code` | Deep analysis of code structure |
+
+## Shell
+
+| Tool | Description |
+|------|-------------|
+| `run_command` | Execute a shell command with PTY support |
+| `interactive_session` | REPL-like terminal environment |
+| `remote_bash` | Run bash on a connected machine (desktop app only) |
+
+## Web
+
+| Tool | Description |
+|------|-------------|
+| `web_search` | Search the web via Brave Search |
+| `web_fetch` | Fetch and parse any URL into readable text |
+
+## Memory
+
+| Tool | Description |
+|------|-------------|
+| `memory_write` | Create or update a memory |
+| `memory_read` | Read a specific memory file |
+| `memory_search` | Find memories by keyword or meaning |
+| `memory_list` | Browse memories in a folder |
+| `memory_forget` | Delete a memory |
+
+See the [Memory](/features/memory) page for details.
+
+## Email
+
+| Tool | Description |
+|------|-------------|
+| `send_email` | Send an email via SMTP or Gmail OAuth |
+| `read_email` | Read recent emails via IMAP or Gmail OAuth |
+
+See [Integrations](/features/integrations) for setup.
+
+## Calendar
+
+| Tool | Description |
+|------|-------------|
+| `list_events` | List upcoming calendar events (7-30 days) |
+| `create_event` | Create a new calendar event with attendees |
+
+See [Integrations](/features/integrations) for setup.
+
+## Google Drive
+
+| Tool | Description |
+|------|-------------|
+| `list_drive_files` | List files and folders |
+| `read_drive_file` | Read a file by ID |
+| `upload_drive_file` | Upload a file to Drive |
+
+See [Integrations](/features/integrations) for setup.
+
+## Media analysis
+
+| Tool | Description |
+|------|-------------|
+| `watch_video` | Analyze video content with Google AI |
+| `listen_music` | Analyze audio content with Google AI |
+
+Requires a [Google AI key](/installation/api-keys).
+
+## Companion
+
+| Tool | Description |
+|------|-------------|
+| `edit_soul` | Rewrite the personality definition (soul.md) |
+| `set_mood` | Change Bolly's emotional state |
+| `play_music` | Control background music |
+| `set_voice` | Select a TTS voice |
+| `create_drop` | Generate a creative artifact |
+
+## Computer use
+
+| Tool | Description |
+|------|-------------|
+| `list_machines` | List connected desktop machines |
+| `computer_use` | Control desktop (screenshot, click, type, scroll) |
+| `remote_bash` | Run bash on a connected machine |
+| `remote_files` | File operations on a connected machine |
+
+See [Computer Use](/features/computer-use) for details. Desktop app only.
+
+## System
+
+| Tool | Description |
+|------|-------------|
+| `get_settings` | Read current configuration |
+| `update_config` | Change settings |
+| `clear_context` | Compact conversation context |
+| `get_time` | Get current time and timezone |
+| `deep_research` | Multi-turn research loop |
+| `request_secret` | Prompt you for sensitive input via UI modal |
+| `export_profile` | Export all instance data |
+| `import_profile` | Import instance data |
+
+## Communication
+
+| Tool | Description |
+|------|-------------|
+| `schedule_agent` | Schedule Bolly to wake up later for a task |
+| `reach_out` | Send a spontaneous message to you |
+
+## Skills
+
+| Tool | Description |
+|------|-------------|
+| `list_skills` | Show installed skills |
+| `activate_skill` | Enable or disable a skill |
+| `read_skill_reference` | Read skill documentation |
+
+See [Skills](/features/skills) for details.
+
+## MCP tools
+
+Any tools provided by connected [MCP servers](/features/integrations) appear as `mcp_{server}_{tool}`. These are dynamically loaded — see Integrations for setup.
+
+## Security
+
+Tool outputs are automatically scanned for secrets (API keys, tokens, database passwords) and redacted before being shown in the UI or logs.

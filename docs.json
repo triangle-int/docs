@@ -49,21 +49,31 @@
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "Features",
         "groups": [
           {
-            "group": "API Documentation",
+            "group": "Core",
             "pages": [
-              "api-reference/introduction"
+              "features/memory",
+              "features/mood",
+              "features/heartbeat",
+              "features/drops"
             ]
           },
           {
-            "group": "Endpoints",
+            "group": "Capabilities",
             "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
+              "features/computer-use",
+              "features/tools",
+              "features/voice",
+              "features/skills"
+            ]
+          },
+          {
+            "group": "Connections",
+            "pages": [
+              "features/integrations",
+              "features/instances"
             ]
           }
         ]

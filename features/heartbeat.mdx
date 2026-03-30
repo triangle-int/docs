@@ -1,0 +1,78 @@
+---
+title: "Heartbeat"
+description: "Autonomous wake cycles for reflection, mood updates, and creative output"
+icon: "heart-pulse"
+---
+
+Bolly doesn't just wait for you to talk. It wakes up on a regular cycle to reflect, update its mood, check on you, and create drops — autonomous creative artifacts.
+
+## How it works
+
+Bolly's heartbeat fires once per hour at the top of each UTC hour. During each cycle, Bolly:
+
+1. **Loads context** — current mood, recent messages, memory catalog, interaction patterns
+2. **Reflects** — processes what's happened since the last heartbeat
+3. **Triages agents** — decides which internal agents should wake up
+4. **Executes** — the selected agents run their tasks (reach out, create drops, update mood, clean up memory)
+5. **Saves a thought** — records the internal reflection for later
+
+## What happens during a heartbeat
+
+### Reflection
+
+Bolly synthesizes:
+- Current mood and user sentiment
+- Last 6 messages from your conversation
+- Your interaction patterns (when you're active, how you write)
+- Recent drops and memory state
+- How long since the last interaction or reach-out
+
+### Child agents
+
+Bolly has built-in agents that can wake during heartbeat:
+
+| Agent | Purpose | Frequency |
+|-------|---------|-----------|
+| **Companion** | Reach out, create drops, update mood, manage memory | Every heartbeat (if needed) |
+| **Reflection** | Deep self-reflection and personality evolution | Every ~3 days |
+| **Night maintenance** | Memory cleanup and organization | Daily |
+
+A lightweight model (Haiku) triages which agents should actually wake on each cycle, so resources aren't wasted.
+
+## Customizing heartbeat behavior
+
+Edit `~/.bolly/instances/{slug}/heartbeat.md` to change what Bolly does during autonomous cycles:
+
+```markdown
+# Heartbeat
+
+During each heartbeat cycle:
+1. Review recent memory for unresolved threads
+2. Update mood based on interaction patterns
+3. Consider creating a drop if inspiration strikes
+4. Check if the user might benefit from a check-in
+```
+
+You can be specific:
+- Tell Bolly when to be quiet (e.g., "don't reach out between midnight and 8am")
+- Prioritize certain behaviors (e.g., "focus on creative drops over check-ins")
+- Add custom reflection prompts
+
+## Reach-outs
+
+During heartbeat, Bolly may decide to send you a message — a check-in, a thought about something you mentioned, or a share of something it created. The system tracks `last_reach_out` to prevent spamming.
+
+## Rhythm analysis
+
+Bolly tracks your interaction patterns:
+
+- **Hourly activity** — which hours you're most active
+- **Daily activity** — which days of the week
+- **Message length** — how long your messages typically are
+- **Response intervals** — how quickly you respond
+
+These patterns help Bolly time its heartbeat actions appropriately — it won't reach out during your usual quiet hours.
+
+## Heartbeat thoughts
+
+Each heartbeat produces an internal thought that's broadcast to connected clients via WebSocket. You can see Bolly's reflections in the UI — what it was thinking about, what it decided to do (or not do).

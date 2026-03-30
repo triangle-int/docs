@@ -1,0 +1,61 @@
+---
+title: "Multiple Instances"
+description: "Run multiple Bolly personalities with isolated memory, mood, and configuration"
+icon: "users"
+---
+
+Bolly supports multiple instances — each with its own personality, memory, mood, drops, and configuration. Think of each instance as a separate companion with its own identity.
+
+## How instances work
+
+Each instance gets its own directory under `~/.bolly/instances/`:
+
+```
+~/.bolly/instances/
+├── default/        # Your main Bolly instance
+│   ├── soul.md
+│   ├── mood.json
+│   ├── memory/
+│   ├── drops/
+│   ├── chats/
+│   └── skills/
+├── work/           # A work-focused instance
+│   └── ...
+└── creative/       # A creative writing partner
+    └── ...
+```
+
+## What's isolated per instance
+
+| Component | Shared or isolated |
+|-----------|-------------------|
+| Memory | Isolated — each instance remembers different things |
+| Mood | Isolated — each has its own emotional state |
+| Drops | Isolated — each creates its own artifacts |
+| Soul (personality) | Isolated — each has a unique soul.md |
+| Heartbeat | Isolated — each has its own heartbeat.md |
+| Skills | Isolated — different skills per instance |
+| Chats | Isolated — separate conversation histories |
+| Email config | Isolated — different accounts per instance |
+| Voice | Isolated — different TTS voice per instance |
+| API keys | **Shared** — global config.toml |
+| MCP servers | **Shared** — global config.toml |
+
+## Managing instances
+
+Instances are managed through the Bolly UI. You can:
+
+- Create new instances with custom names
+- Switch between instances
+- Delete instances you no longer need
+
+## Use cases
+
+- **Personal + Work** — keep work context separate from personal conversations
+- **Different personalities** — experiment with different soul.md configurations
+- **Project-specific** — create an instance for each major project with relevant memory
+- **Shared device** — each user gets their own instance
+
+## Heartbeat staggering
+
+When multiple instances are running, their heartbeat cycles are staggered with 30-second delays between each. This prevents all instances from firing simultaneously and overloading the API.

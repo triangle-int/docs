@@ -1,0 +1,64 @@
+---
+title: "Computer Use"
+description: "Full desktop control — screenshots, keyboard, mouse, bash, and file management"
+icon: "display"
+---
+
+With the [desktop app](/installation/desktop-app), Bolly can see and interact with your computer. It can take screenshots, click, type, scroll, run shell commands, and manage files — across multiple machines.
+
+<Warning>Computer use gives Bolly direct access to your desktop. All actions require your confirmation in the UI.</Warning>
+
+## Requirements
+
+Computer use is only available through the **Bolly desktop app** (Tauri). The web-only version doesn't have access to your screen or system.
+
+## Capabilities
+
+| Action | Description |
+|--------|-------------|
+| **screenshot** | Capture current screen content |
+| **left_click** | Click at specific coordinates |
+| **right_click** | Right-click at coordinates |
+| **double_click** | Double-click at coordinates |
+| **middle_click** | Middle-click at coordinates |
+| **mouse_move** | Move cursor to coordinates |
+| **type** | Type text at current cursor position |
+| **key** | Press key combinations (e.g., `cmd+c`, `ctrl+shift+t`) |
+| **scroll** | Scroll up, down, left, or right |
+| **switch_desktop** | Switch between virtual desktops/Spaces |
+
+## How it works
+
+1. The desktop app registers itself as a "machine" in Bolly's machine registry
+2. Bolly uses the `list_machines` tool to see connected machines
+3. When it needs to interact with your desktop, it uses the `computer_use` tool with a specific `machine_id`
+4. Screenshots are saved as JPEG files and passed to the LLM as URLs (not raw base64) to keep context efficient
+
+## Multi-machine support
+
+If you run the desktop app on multiple computers, Bolly can control all of them. Each machine registers with its own ID, OS, hostname, and screen dimensions. Bolly can coordinate tasks across machines.
+
+## Shell commands
+
+Beyond visual desktop control, Bolly can run shell commands via:
+
+- **`run_command`** — execute a command and get output
+- **`remote_bash`** — run bash on a connected machine
+
+## File operations on machines
+
+- **`remote_files`** — read, write, and manage files on connected machines
+
+## macOS shortcuts
+
+Bolly knows common macOS shortcuts:
+
+| Action | Shortcut |
+|--------|----------|
+| Switch Space | `switch_desktop` with `left`/`right` |
+| Mission Control | `ctrl+up` |
+| App Expose | `ctrl+down` |
+| Spotlight | `cmd+space` |
+| Close window | `cmd+w` |
+| Quit app | `cmd+q` |
+| Switch app | `cmd+tab` |

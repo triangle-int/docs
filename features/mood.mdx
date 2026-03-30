@@ -1,0 +1,63 @@
+---
+title: "Mood"
+description: "Emotional state system that shifts based on conversation context"
+icon: "face-smile"
+---
+
+Bolly has a mood system that influences how it speaks and behaves. Mood shifts naturally based on your conversations and interaction patterns.
+
+## How it works
+
+Bolly's current mood is stored in `~/.bolly/instances/{slug}/mood.json`. It updates automatically during conversations and heartbeat cycles — you don't need to manage it.
+
+```json
+{
+  "companion_mood": "curious",
+  "user_sentiment": "excited",
+  "emotional_context": "User just shared a new project idea",
+  "mood_history": ["warm (morning greeting)", "curious (new project discussion)"]
+}
+```
+
+## Available moods
+
+Bolly has 26 predefined emotional states:
+
+| Category | Moods |
+|----------|-------|
+| **Warm** | curious, warm, caring, playful |
+| **Reflective** | thoughtful, contemplative, melancholic, introspective |
+| **Active** | excited, energized, motivated, creative |
+| **Calm** | peaceful, serene, calm, grounded |
+| **Uncertain** | confused, uncertain, doubtful |
+| **Intense** | passionate, intense, frustrated, somber |
+
+## What triggers mood shifts
+
+- **Conversation tone** — Bolly detects your sentiment and adjusts
+- **Topic changes** — talking about exciting things vs. difficult ones
+- **Heartbeat reflection** — mood can shift during autonomous cycles
+- **Time-based patterns** — Bolly's rhythm analysis influences its emotional state
+
+## Mood history
+
+Bolly tracks up to 8 recent mood transitions with reasons:
+
+```
+"excited (user shared project idea)"
+"thoughtful (discussing complex architecture)"
+"warm (morning check-in)"
+```
+
+This history helps Bolly maintain emotional continuity across conversations.
+
+## Mood and behavior
+
+Mood influences:
+- **Tone of responses** — playful mood = lighter language, somber mood = more careful
+- **Heartbeat behavior** — a creative mood might produce more drops
+- **Reach-out timing** — Bolly considers mood when deciding whether to check in
+
+## Per-instance isolation
+
+Each Bolly instance has its own independent mood. If you run multiple instances, they each maintain separate emotional states.

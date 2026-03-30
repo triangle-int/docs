@@ -1,0 +1,86 @@
+---
+title: "Memory"
+description: "Persistent memory system with keyword and semantic search"
+icon: "brain"
+---
+
+Bolly remembers everything across sessions. The memory system uses a file-based library with two search methods: BM25 keyword search (always available) and vector semantic search (requires Google AI key).
+
+## How it works
+
+Every memory is stored as a file in `~/.bolly/instances/{slug}/memory/`. Bolly creates, reads, and manages memories automatically during conversations — you don't need to tell it to remember things.
+
+When you mention something important — a goal, a preference, a project detail — Bolly writes it to memory. Next time it's relevant, Bolly recalls it.
+
+## Memory categories
+
+Bolly organizes memories into folders:
+
+| Folder | Purpose |
+|--------|---------|
+| `about/` | Facts about you — name, role, interests, background |
+| `preferences/` | Your habits, likes, dislikes, work style |
+| `moments/` | Shared experiences and conversations worth remembering |
+| `pinned/` | Always-loaded memories (injected into every conversation) |
+
+You can also create custom folders. Bolly will use whatever structure makes sense for the conversation.
+
+## Search methods
+
+### BM25 (keyword search)
+
+Always available, no extra setup needed. Works well for finding memories with specific terms.
+
+### Vector search (semantic)
+
+Requires a [Google AI key](/installation/api-keys). Uses Gemini embeddings to find memories by meaning, not just keywords. For example, searching "feeling stressed about work" can find a memory about "deadline pressure on the project" even without matching words.
+
+<Info>Vector search uses LanceDB (embedded, no external server needed) and Gemini 2 embeddings at 768 dimensions.</Info>
+
+## Pinned memories
+
+Any memory file placed in the `pinned/` folder is loaded into Bolly's context for every conversation. Use this for things Bolly should always know — your name, key goals, important boundaries.
+
+## Media memories
+
+Bolly can store more than text. Supported formats:
+
+- **Images:** JPG, PNG, GIF, WebP
+- **Documents:** PDF
+- **Video:** MP4, MOV, WebM
+- **Audio:** MP3, WAV, OGG
+
+Media files are embedded into the vector store (with Google AI key) for semantic search alongside text memories.
+
+## Memory tools
+
+Bolly has 5 memory tools it uses automatically:
+
+| Tool | What it does |
+|------|-------------|
+| `memory_write` | Create or update a memory file |
+| `memory_read` | Read a specific memory |
+| `memory_search` | Find relevant memories by query |
+| `memory_list` | Browse memories in a folder |
+| `memory_forget` | Delete a memory that's no longer relevant |
+
+## Frontmatter timestamps
+
+Each memory file automatically gets timestamps:
+
+```markdown
+---
+created: 2025-03-28
+updated: 2025-03-30
+---
+
+User is working on a SvelteKit project called Bolly...
+```
+
+These help Bolly understand how recent a memory is.
+
+## Managing memories manually
+
+You can directly edit files in `~/.bolly/instances/{slug}/memory/` with any text editor. Changes are picked up on the next conversation or context refresh.
+
+To force a full rescan and reindex of the memory library, use the reindex endpoint or restart Bolly.

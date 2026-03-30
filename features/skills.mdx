@@ -1,0 +1,67 @@
+---
+title: "Skills"
+description: "Installable plugins that extend Bolly's capabilities"
+icon: "puzzle-piece"
+---
+
+Skills are plugins that add new capabilities, behaviors, or knowledge to Bolly. When a skill is activated, its instructions are injected into Bolly's system prompt.
+
+## How skills work
+
+Each skill is a `SKILL.md` file with YAML frontmatter and Markdown instructions:
+
+```yaml
+---
+name: Example Skill
+description: What this skill does
+license: MIT
+compatibility: claude-opus
+metadata:
+  tags: ["productivity", "coding"]
+allowed-tools: "run_command,read_file,write_file"
+---
+
+# Instructions
+
+When the user asks about X, follow these steps:
+1. ...
+2. ...
+```
+
+When activated, the Markdown body gets injected into Bolly's system prompt — giving it new knowledge and behaviors.
+
+## Installing skills
+
+Skills can be installed from GitHub repositories. The installation flow:
+
+1. Bolly fetches the `SKILL.md` from the specified GitHub repo
+2. Parses the frontmatter and instructions
+3. Stores the skill config in `~/.bolly/instances/{slug}/skills/{id}.json`
+
+## Managing skills
+
+Bolly has three tools for skill management:
+
+| Tool | Description |
+|------|-------------|
+| `list_skills` | Show all installed skills with descriptions and status |
+| `activate_skill` | Enable or disable a skill |
+| `read_skill_reference` | Read bundled documentation from a skill |
+
+## Skill resources
+
+Skills can include additional files:
+
+- `references/` — documentation and guides
+- `scripts/` — automation scripts
+- `assets/` — images, templates, data files
+
+Bolly can read these via the `read_skill_reference` tool when it needs more context.
+
+## Per-instance skills
+
+Skills are installed per instance. Different Bolly instances can have different skills enabled — a work-focused instance might have coding skills, while a personal one might have journaling skills.
+
+## Built-in skills
+
+Bolly ships with selected built-in skills that are enabled by default. These can be toggled on or off per instance.
