@@ -23,34 +23,9 @@ This script will:
 
 <Info>The install script is open source. You can [review it on GitHub](https://github.com/triangle-int/bolly) before running.</Info>
 
-## Post-Install Configuration
-
-After installation, you **must** add your Anthropic API key before starting Bolly.
+## Start and set up
 
 <Steps>
-<Step title="Open your config file">
-
-```bash
-nano ~/.bolly/data/config.toml
-```
-
-Or use any text editor of your choice.
-
-</Step>
-
-<Step title="Add your Anthropic API key">
-
-Find the `[llm.tokens]` section and add your key:
-
-```toml
-[llm.tokens]
-ANTHROPIC = "sk-ant-your-key-here"
-```
-
-<Warning>Without a valid Anthropic API key, Bolly will not function. Get one at [console.anthropic.com](https://console.anthropic.com).</Warning>
-
-</Step>
-
 <Step title="Start the service">
 
 <CodeGroup>
@@ -68,14 +43,16 @@ launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
 
 </Step>
 
-<Step title="Open Bolly">
+<Step title="Open Bolly in your browser">
 
-Navigate to [http://localhost:8080](http://localhost:8080) in your browser.
+Go to [http://localhost:8080](http://localhost:8080). Bolly will guide you through the initial setup — including entering your API key — directly in the web interface.
+
+<Info>You'll need an Anthropic API key. Get one at [console.anthropic.com](https://console.anthropic.com) if you don't have one yet.</Info>
 
 </Step>
 </Steps>
 
-## Managing the Service
+## Managing the service
 
 ### Check status
 
@@ -105,7 +82,7 @@ launchctl unload ~/Library/LaunchAgents/dev.bollyai.bolly.plist
 
 </CodeGroup>
 
-### Restart after config changes
+### Restart
 
 <CodeGroup>
 
@@ -197,13 +174,13 @@ rm -rf ~/.bolly
 </Step>
 </Steps>
 
-## Next Steps
+## Next steps
 
 <CardGroup cols={2}>
   <Card title="Configuration" icon="gear" href="/installation/configuration">
     Customize personality, heartbeat, and memory settings.
   </Card>
   <Card title="API Keys" icon="key" href="/installation/api-keys">
-    Add optional integrations like Google AI and ElevenLabs.
+    Learn about optional integrations like Google AI and ElevenLabs.
   </Card>
 </CardGroup>

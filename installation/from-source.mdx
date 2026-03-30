@@ -24,14 +24,14 @@ Building from source is for developers who want to contribute, customize Bolly's
   </Card>
 </CardGroup>
 
-## Clone the Repository
+## Clone the repository
 
 ```bash
 git clone https://github.com/triangle-int/bolly.git
 cd bolly
 ```
 
-## Project Structure
+## Project structure
 
 ```
 bolly/
@@ -42,7 +42,7 @@ bolly/
 └── VERSION         # Single source of truth for version
 ```
 
-## Building the Server
+## Building the server
 
 The server is a Rust application using Axum. It embeds the compiled client at build time via `rust-embed`.
 
@@ -83,14 +83,14 @@ Or run the binary directly:
 ./target/release/bolly
 ```
 
-Bolly will be available at [http://localhost:8080](http://localhost:8080).
+Open [http://localhost:8080](http://localhost:8080) in your browser. Bolly will walk you through the initial setup.
 
 </Step>
 </Steps>
 
 <Tip>For development, use `cargo run` (without `--release`) for faster compilation with debug symbols.</Tip>
 
-## Development Mode (Hot Reload)
+## Development mode (hot reload)
 
 For active development, run the server and client separately with hot reload:
 
@@ -119,7 +119,7 @@ The client dev server runs on `http://localhost:5173` with hot module replacemen
 </Step>
 </Steps>
 
-## Building the Desktop App
+## Building the desktop app
 
 The desktop app wraps the client in a Tauri 2 shell, adding computer use capabilities.
 
@@ -160,7 +160,7 @@ Built artifacts will be in `desktop/src-tauri/target/release/bundle/`.
 </Step>
 </Steps>
 
-## Building the Landing Page
+## Building the landing page
 
 If you want to run or modify the marketing site:
 
@@ -174,24 +174,7 @@ The landing page runs on `http://localhost:5173`.
 
 <Note>The landing page requires a PostgreSQL database (Neon) for user management features. For just viewing the site, the dev server works without it.</Note>
 
-## Environment Setup
-
-### Server configuration
-
-The server reads from `~/.bolly/data/config.toml`. Create this file before running:
-
-```bash
-mkdir -p ~/.bolly/data
-```
-
-Create `~/.bolly/data/config.toml` with at minimum:
-
-```toml
-[llm.tokens]
-ANTHROPIC = "sk-ant-your-key-here"
-```
-
-### Custom data directory
+## Custom data directory
 
 Set the `BOLLY_HOME` environment variable to use a different data directory:
 
@@ -199,7 +182,7 @@ Set the `BOLLY_HOME` environment variable to use a different data directory:
 BOLLY_HOME=/path/to/data cargo run
 ```
 
-## Code Style & Linting
+## Code style and linting
 
 Before submitting changes:
 
@@ -214,7 +197,7 @@ cd client  # or desktop
 pnpm check
 ```
 
-## Running Tests
+## Running tests
 
 ```bash
 # Server tests
@@ -236,13 +219,13 @@ pnpm test
 
 <Info>See [CONTRIBUTING.md](https://github.com/triangle-int/bolly/blob/main/CONTRIBUTING.md) in the repository for full guidelines.</Info>
 
-## Next Steps
+## Next steps
 
 <CardGroup cols={2}>
   <Card title="Configuration" icon="gear" href="/installation/configuration">
-    Full config.toml reference for customizing Bolly's behavior.
+    Customize personality, heartbeat, and memory settings.
   </Card>
   <Card title="API Keys" icon="key" href="/installation/api-keys">
-    Set up API keys for Anthropic, Google AI, and ElevenLabs.
+    Learn about API keys for Anthropic, Google AI, and ElevenLabs.
   </Card>
 </CardGroup>

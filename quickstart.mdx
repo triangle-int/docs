@@ -20,25 +20,6 @@ This downloads the latest binary, creates your config directory at `~/.bolly/`, 
 
 </Step>
 
-<Step title="Add your API key">
-
-Open your config file and add your Anthropic API key:
-
-```bash
-nano ~/.bolly/data/config.toml
-```
-
-Add the following under the `[llm.tokens]` section:
-
-```toml
-[llm.tokens]
-ANTHROPIC = "sk-ant-your-key-here"
-```
-
-<Warning>An Anthropic API key is **required**. Bolly uses Claude as its underlying LLM. Get a key at [console.anthropic.com](https://console.anthropic.com).</Warning>
-
-</Step>
-
 <Step title="Start Bolly">
 
 <CodeGroup>
@@ -57,7 +38,13 @@ docker run -d --name bolly -p 8080:8080 -v bolly-data:/data -e BOLLY_HOME=/data 
 
 </CodeGroup>
 
-Open [http://localhost:8080](http://localhost:8080) in your browser. That's it.
+</Step>
+
+<Step title="Open your browser">
+
+Go to [http://localhost:8080](http://localhost:8080). Bolly will walk you through setup — including entering your Anthropic API key — right in the browser.
+
+<Info>You'll need an Anthropic API key to use Bolly. Get one at [console.anthropic.com](https://console.anthropic.com) if you don't have one yet.</Info>
 
 </Step>
 </Steps>
@@ -71,7 +58,7 @@ Open [http://localhost:8080](http://localhost:8080) in your browser. That's it.
 </Card>
 
 <Card title="API Keys" icon="key" href="/installation/api-keys">
-  Add optional keys for Google AI, ElevenLabs, and other integrations.
+  Learn about optional integrations like Google AI and ElevenLabs.
 </Card>
 
 <Card title="Docker Setup" icon="docker" href="/installation/docker">

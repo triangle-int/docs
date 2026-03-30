@@ -1,40 +1,27 @@
 ---
 title: "Configuration"
-description: "Customize Bolly's behavior through config.toml — personality, heartbeat, memory, and more"
+description: "Customize Bolly's behavior — personality, heartbeat, memory, and more"
 icon: "gear"
 ---
 
-Bolly's configuration lives in a single TOML file at `~/.bolly/data/config.toml`. This page covers every configurable aspect of Bolly.
+Bolly stores its configuration and data in the `~/.bolly/` directory. Most setup — including your API key — happens through the web interface when you first open Bolly. This page covers the advanced configuration you can customize beyond the UI.
 
-## Config File Location
+## Data directory
 
-| Installation Method | Config Path |
-|--------------------|-------------|
-| One-line install | `~/.bolly/data/config.toml` |
-| Docker | Inside volume at `/data/config.toml` |
-| Desktop app | `~/.bolly/data/config.toml` |
-| From source | `~/.bolly/data/config.toml` (or `$BOLLY_HOME/config.toml`) |
+All Bolly data lives in `~/.bolly/` by default (configurable via `BOLLY_HOME` environment variable):
 
-<Tip>After editing `config.toml`, restart Bolly for changes to take effect.</Tip>
+| Installation Method | Data path |
+|--------------------|-----------|
+| One-line install | `~/.bolly/` |
+| Docker | Inside volume at `/data/` |
+| Desktop app | `~/.bolly/` |
+| From source | `~/.bolly/` (or `$BOLLY_HOME`) |
 
-## API Keys
-
-The most critical section — without at least the Anthropic key, Bolly won't work.
-
-```toml
-[llm.tokens]
-ANTHROPIC = "sk-ant-your-key-here"      # Required
-GOOGLE_AI = "your-google-ai-key"         # Optional: vector search + media analysis
-ELEVENLABS = "your-elevenlabs-key"       # Optional: text-to-speech
-```
-
-<Info>See the [API Keys guide](/installation/api-keys) for detailed instructions on obtaining each key.</Info>
-
-## Instance Configuration
+## Instance configuration
 
 Each Bolly instance has its own subdirectory under `~/.bolly/instances/{slug}/` with these customizable files:
 
-### soul.md — Personality Definition
+### soul.md — Personality definition
 
 The `soul.md` file defines Bolly's personality, tone, and behavioral guidelines. This is a Markdown file that gets injected into Bolly's system prompt.
 
@@ -58,7 +45,7 @@ support without being intrusive.
 
 <Tip>Edit `soul.md` to give Bolly a completely different personality. The file supports full Markdown formatting.</Tip>
 
-### heartbeat.md — Autonomous Behavior
+### heartbeat.md — Autonomous behavior
 
 The `heartbeat.md` file controls what Bolly does during its autonomous wake cycles (every 45 minutes by default). During heartbeats, Bolly can reflect, update its mood, and create drops.
 
@@ -72,7 +59,7 @@ During each heartbeat cycle:
 4. Check if the user might benefit from a check-in
 ```
 
-### mood.json — Emotional State
+### mood.json — Emotional state
 
 Bolly's current mood is stored in `mood.json`. This is automatically managed but can be manually adjusted:
 
@@ -86,14 +73,14 @@ Bolly's current mood is stored in `mood.json`. This is automatically managed but
 
 The mood system influences Bolly's tone and behavior in conversations. It shifts naturally based on interaction context.
 
-## Memory System
+## Memory system
 
 Bolly uses a file-based memory library with two search methods:
 
 | Method | Purpose | Requirement |
 |--------|---------|-------------|
 | **BM25** | Keyword-based text search | Built-in, always available |
-| **Vector Search** | Semantic similarity search | Requires Google AI API key |
+| **Vector search** | Semantic similarity search | Requires Google AI API key |
 
 Memory files are stored in `~/.bolly/instances/{slug}/memory/` as individual files. Bolly automatically creates, retrieves, and manages memories during conversations.
 
@@ -107,7 +94,7 @@ Drops are Bolly's way of expressing creativity when not actively in conversation
 
 Bolly supports installable skills that extend its capabilities. Skills are stored in `~/.bolly/instances/{slug}/skills/` and can add new tools, behaviors, or integrations.
 
-## Environment Variables
+## Environment variables
 
 You can override the data directory using the `BOLLY_HOME` environment variable:
 
@@ -120,19 +107,19 @@ This is especially useful for:
 - Docker deployments with custom volume mounts
 - Testing configurations without affecting your main setup
 
-## Port Configuration
+## Port configuration
 
-By default, Bolly runs on port `8080`. The port can be configured in `config.toml` or through the `PORT` environment variable:
+By default, Bolly runs on port `8080`. You can override this with the `PORT` environment variable:
 
 ```bash
 PORT=3000 bolly
 ```
 
-## Next Steps
+## Next steps
 
 <CardGroup cols={2}>
   <Card title="API Keys" icon="key" href="/installation/api-keys">
-    Detailed setup for Anthropic, Google AI, and ElevenLabs keys.
+    Learn about optional integrations like Google AI and ElevenLabs.
   </Card>
   <Card title="Troubleshooting" icon="wrench" href="/installation/troubleshooting">
     Fix common configuration issues.

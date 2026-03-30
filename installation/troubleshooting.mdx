@@ -4,7 +4,7 @@ description: "Solutions for common Bolly installation and runtime issues"
 icon: "wrench"
 ---
 
-## Installation Issues
+## Installation issues
 
 <AccordionGroup>
   <Accordion title="curl: command not found">
@@ -72,14 +72,12 @@ icon: "wrench"
     ```
 
     Common causes:
-    - **Missing config file**: Ensure `~/.bolly/data/config.toml` exists
-    - **Invalid API key**: Check that your Anthropic key is correctly formatted
     - **Port in use**: Another service is using port 8080 — change the port or stop the conflicting service
     - **Permission issues**: The service user needs read/write access to `~/.bolly/`
   </Accordion>
 </AccordionGroup>
 
-## Docker Issues
+## Docker issues
 
 <AccordionGroup>
   <Accordion title="Container exits immediately">
@@ -90,9 +88,8 @@ icon: "wrench"
     ```
 
     Usually caused by:
-    - Missing or invalid `config.toml` in the volume
-    - Missing Anthropic API key
     - Port conflict (another container using 8080)
+    - Volume permission issues
   </Accordion>
 
   <Accordion title="Can't access Bolly at localhost:8080">
@@ -130,7 +127,7 @@ icon: "wrench"
   </Accordion>
 </AccordionGroup>
 
-## Desktop App Issues
+## Desktop app issues
 
 <AccordionGroup>
   <Accordion title="Desktop app won't launch on macOS">
@@ -157,20 +154,15 @@ icon: "wrench"
   </Accordion>
 </AccordionGroup>
 
-## API Key Issues
+## API key issues
 
 <AccordionGroup>
   <Accordion title="'Invalid API key' error">
-    Double-check your key in `config.toml`:
+    Check the following:
 
     - Anthropic keys start with `sk-ant-`
-    - Ensure there are no extra spaces or newline characters
     - Verify the key is active in your [Anthropic dashboard](https://console.anthropic.com/settings/keys)
-
-    ```toml
-    [llm.tokens]
-    ANTHROPIC = "sk-ant-api03-your-actual-key"
-    ```
+    - Try re-entering the key through Bolly's settings in the web interface
   </Accordion>
 
   <Accordion title="'Insufficient credits' or rate limit errors">
@@ -186,7 +178,7 @@ icon: "wrench"
   </Accordion>
 </AccordionGroup>
 
-## Runtime Issues
+## Runtime issues
 
 <AccordionGroup>
   <Accordion title="Bolly is slow to respond">
@@ -229,7 +221,7 @@ icon: "wrench"
   </Accordion>
 </AccordionGroup>
 
-## Build Issues (From Source)
+## Build issues (from source)
 
 <AccordionGroup>
   <Accordion title="Rust compilation errors">
@@ -266,7 +258,7 @@ icon: "wrench"
   </Accordion>
 </AccordionGroup>
 
-## Getting Help
+## Getting help
 
 If your issue isn't covered here:
 

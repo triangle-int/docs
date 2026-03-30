@@ -13,7 +13,7 @@ The desktop app is the full Bolly experience — it includes everything in the w
 Download the latest version for your platform from GitHub Releases:
 
 <Card title="Download Bolly Desktop" icon="download" href="https://github.com/triangle-int/bolly/releases">
-  Choose your platform: macOS (Apple Silicon / Intel), Windows, or Linux.
+  Choose your platform: macOS, Windows, or Linux.
 </Card>
 
 ### Available builds
@@ -21,18 +21,17 @@ Download the latest version for your platform from GitHub Releases:
 | Platform | Architecture | File |
 |----------|-------------|------|
 | macOS | Apple Silicon (M1+) | `bolly_x.x.x_aarch64.dmg` |
-| macOS | Intel | `bolly_x.x.x_x64.dmg` |
 | Windows | x86_64 | `bolly_x.x.x_x64-setup.exe` |
 | Linux | x86_64 | `bolly_x.x.x_amd64.AppImage` |
 | Linux | x86_64 (Debian/Ubuntu) | `bolly_x.x.x_amd64.deb` |
 
-## Installation by Platform
+## Installation by platform
 
 ### macOS
 
 <Steps>
 <Step title="Download the DMG">
-  Download the `.dmg` file matching your chip (Apple Silicon or Intel) from the [releases page](https://github.com/triangle-int/bolly/releases).
+  Download the `.dmg` file from the [releases page](https://github.com/triangle-int/bolly/releases).
 </Step>
 
 <Step title="Install">
@@ -43,8 +42,8 @@ Download the latest version for your platform from GitHub Releases:
   Open Bolly from Applications. macOS may warn about an unverified developer — go to **System Settings > Privacy & Security** and click **Open Anyway**.
 </Step>
 
-<Step title="Add your API key">
-  On first launch, Bolly will prompt you to enter your Anthropic API key. You can also configure it later through the app's settings.
+<Step title="Set up in the app">
+  On first launch, Bolly will guide you through setup — including entering your Anthropic API key — right in the app.
 </Step>
 </Steps>
 
@@ -59,12 +58,8 @@ Download the latest version for your platform from GitHub Releases:
   Double-click the installer and follow the prompts. Windows SmartScreen may show a warning — click **More info > Run anyway**.
 </Step>
 
-<Step title="Launch Bolly">
-  Find Bolly in your Start Menu or desktop shortcut.
-</Step>
-
-<Step title="Add your API key">
-  Enter your Anthropic API key when prompted, or add it through Settings.
+<Step title="Launch and set up">
+  Open Bolly from the Start Menu or desktop shortcut. The app will walk you through the initial setup including your API key.
 </Step>
 </Steps>
 
@@ -92,12 +87,12 @@ sudo dpkg -i bolly_*.deb
 
 </Step>
 
-<Step title="Add your API key">
-  Enter your Anthropic API key when prompted on first launch.
+<Step title="Set up in the app">
+  On first launch, Bolly will guide you through the setup process.
 </Step>
 </Steps>
 
-## Computer Use Capabilities
+## Computer use capabilities
 
 The desktop app enables Bolly to interact with your computer directly. These capabilities are **opt-in** and require your confirmation:
 
@@ -111,15 +106,15 @@ The desktop app enables Bolly to interact with your computer directly. These cap
 
 <Warning>Computer use gives Bolly direct access to your desktop. Always review what Bolly is doing, especially with shell commands and file operations. Actions require your confirmation in the UI.</Warning>
 
-## Multi-Machine Support
+## Multi-machine support
 
 Bolly's computer use works across multiple machines. If you have multiple Bolly desktop instances running on different computers, they can coordinate tasks across machines.
 
-## Data Location
+## Data location
 
 The desktop app stores data in the same `~/.bolly/` directory as other installation methods:
 
-| Platform | Default Path |
+| Platform | Default path |
 |----------|-------------|
 | macOS | `~/.bolly/` |
 | Windows | `%USERPROFILE%\.bolly\` |
@@ -129,13 +124,13 @@ The desktop app stores data in the same `~/.bolly/` directory as other installat
 
 The desktop app checks for updates automatically. When a new version is available, you'll see a notification in the app. You can also manually download the latest version from the [releases page](https://github.com/triangle-int/bolly/releases).
 
-## Next Steps
+## Next steps
 
 <CardGroup cols={2}>
   <Card title="Configuration" icon="gear" href="/installation/configuration">
     Customize Bolly's personality, heartbeat, and memory behavior.
   </Card>
   <Card title="API Keys" icon="key" href="/installation/api-keys">
-    Add optional keys for Google AI and ElevenLabs.
+    Learn about optional keys for Google AI and ElevenLabs.
   </Card>
 </CardGroup>

@@ -6,6 +6,8 @@ icon: "key"
 
 Bolly uses a **BYOK** (Bring Your Own Key) model — you provide your own API keys. This means your conversations go directly to the providers, and Bolly never routes your data through third-party servers.
 
+<Info>You enter all API keys through Bolly's web interface — just open your browser and follow the setup flow. No need to edit config files manually.</Info>
+
 ## Required: Anthropic
 
 Anthropic's Claude is Bolly's underlying LLM. This key is **required** for Bolly to function.
@@ -23,19 +25,12 @@ Anthropic's Claude is Bolly's underlying LLM. This key is **required** for Bolly
   Anthropic requires prepaid credits. Add funds under **Settings > Billing**. Usage depends on how much you interact with Bolly — typical usage is $5-20/month.
 </Step>
 
-<Step title="Add the key to Bolly">
-
-Edit your `config.toml`:
-
-```toml
-[llm.tokens]
-ANTHROPIC = "sk-ant-api03-your-key-here"
-```
-
+<Step title="Enter the key in Bolly">
+  Open Bolly in your browser at [http://localhost:8080](http://localhost:8080). The setup flow will prompt you for your API key.
 </Step>
 </Steps>
 
-<Warning>Keep your API key secret. Never share it, commit it to version control, or expose it in client-side code. Bolly stores it locally in your config file.</Warning>
+<Warning>Keep your API key secret. Never share it or commit it to version control. Bolly stores it locally on your machine.</Warning>
 
 ### Anthropic pricing considerations
 
@@ -64,14 +59,8 @@ Google AI provides two features for Bolly:
   Choose an existing Google Cloud project or create a new one.
 </Step>
 
-<Step title="Add the key to Bolly">
-
-```toml
-[llm.tokens]
-ANTHROPIC = "sk-ant-your-key-here"
-GOOGLE_AI = "AIzaSy-your-google-ai-key-here"
-```
-
+<Step title="Add the key in Bolly">
+  Open Bolly's settings in the web interface and add your Google AI key.
 </Step>
 </Steps>
 
@@ -98,69 +87,43 @@ ElevenLabs enables Bolly to speak with a synthesized voice using text-to-speech.
   Navigate to your profile settings and copy your API key.
 </Step>
 
-<Step title="Add the key to Bolly">
-
-```toml
-[llm.tokens]
-ANTHROPIC = "sk-ant-your-key-here"
-ELEVENLABS = "your-elevenlabs-key-here"
-```
-
+<Step title="Add the key in Bolly">
+  Open Bolly's settings in the web interface and add your ElevenLabs key.
 </Step>
 </Steps>
 
 <Note>ElevenLabs offers a free tier with limited characters per month. Paid plans start at $5/month for more usage.</Note>
 
-## Full Config Example
-
-Here's a complete `[llm.tokens]` section with all supported keys:
-
-```toml
-[llm.tokens]
-# Required — powers all of Bolly's reasoning and conversation
-ANTHROPIC = "sk-ant-api03-your-key-here"
-
-# Optional — enables semantic memory search and media analysis
-GOOGLE_AI = "AIzaSy-your-google-ai-key-here"
-
-# Optional — enables text-to-speech voice output
-ELEVENLABS = "your-elevenlabs-key-here"
-```
-
-## Security Best Practices
+## Security best practices
 
 - **Never share your API keys** — they grant full access to your accounts
-- **Don't commit config.toml to git** — add `config.toml` to your `.gitignore`
 - **Rotate keys periodically** — regenerate keys every few months
 - **Monitor usage** — check provider dashboards for unexpected spikes
 - **Use separate keys for Bolly** — don't reuse keys from other projects
 
-## Verifying Your Keys
+## Verifying your keys
 
-After adding your keys, restart Bolly and check the logs for confirmation:
+After entering your keys through the Bolly UI, check the logs to confirm successful connection:
 
 <CodeGroup>
 
 ```bash Linux
-sudo systemctl restart bolly
 journalctl -u bolly -n 20
 ```
 
 ```bash macOS
-launchctl unload ~/Library/LaunchAgents/dev.bollyai.bolly.plist
-launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+tail -20 ~/Library/Logs/bolly.log
 ```
 
 ```bash Docker
-docker restart bolly
 docker logs bolly --tail 20
 ```
 
 </CodeGroup>
 
-Look for messages confirming successful API connection. If a key is invalid, Bolly will log an error with details.
+Look for messages confirming successful API connection. If a key is invalid, Bolly will show an error in the web interface.
 
-## Next Steps
+## Next steps
 
 <CardGroup cols={2}>
   <Card title="Configuration" icon="gear" href="/installation/configuration">
