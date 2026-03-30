@@ -1,80 +1,85 @@
 ---
 title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+description: "Get Bolly running in under 5 minutes"
 ---
 
-## Get started in three steps
+Go from zero to a running Bolly instance in three steps.
 
-Get your documentation site running locally and make your first customization.
+<Steps>
+<Step title="Install Bolly">
 
-### Step 1: Set up your local environment
+Run the one-line installer on Linux or macOS:
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+```bash
+curl -fsSL https://bollyai.dev/install.sh | bash
+```
 
-### Step 2: Deploy your changes
+This downloads the latest binary, creates your config directory at `~/.bolly/`, and sets up a background service.
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+<Tip>On macOS, you can also download the [Desktop App](https://github.com/triangle-int/bolly/releases) for a native experience with computer use support.</Tip>
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+</Step>
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+<Step title="Add your API key">
 
-### Step 3: Go live
+Open your config file and add your Anthropic API key:
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+```bash
+nano ~/.bolly/data/config.toml
+```
+
+Add the following under the `[llm.tokens]` section:
+
+```toml
+[llm.tokens]
+ANTHROPIC = "sk-ant-your-key-here"
+```
+
+<Warning>An Anthropic API key is **required**. Bolly uses Claude as its underlying LLM. Get a key at [console.anthropic.com](https://console.anthropic.com).</Warning>
+
+</Step>
+
+<Step title="Start Bolly">
+
+<CodeGroup>
+
+```bash Linux
+sudo systemctl start bolly
+```
+
+```bash macOS
+launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+```
+
+```bash Docker
+docker run -d --name bolly -p 8080:8080 -v bolly-data:/data -e BOLLY_HOME=/data --restart always ghcr.io/triangle-int/bolly:latest
+```
+
+</CodeGroup>
+
+Open [http://localhost:8080](http://localhost:8080) in your browser. That's it.
+
+</Step>
+</Steps>
 
 ## Next steps
 
-Now that you have your docs running, explore these key features:
-
 <CardGroup cols={2}>
 
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
+<Card title="Configuration" icon="gear" href="/installation/configuration">
+  Customize personality, heartbeat behavior, and memory settings.
 </Card>
 
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
+<Card title="API Keys" icon="key" href="/installation/api-keys">
+  Add optional keys for Google AI, ElevenLabs, and other integrations.
 </Card>
 
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
+<Card title="Docker Setup" icon="docker" href="/installation/docker">
+  Production-ready container deployment with persistent storage.
 </Card>
 
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
+<Card title="Troubleshooting" icon="wrench" href="/installation/troubleshooting">
+  Fix common issues with installation and startup.
 </Card>
 
 </CardGroup>
-
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>

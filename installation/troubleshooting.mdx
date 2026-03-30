@@ -1,0 +1,286 @@
+---
+title: "Troubleshooting"
+description: "Solutions for common Bolly installation and runtime issues"
+icon: "wrench"
+---
+
+## Installation Issues
+
+<AccordionGroup>
+  <Accordion title="curl: command not found">
+    Install curl through your package manager:
+
+    ```bash
+    # Ubuntu/Debian
+    sudo apt install curl
+
+    # macOS (should be pre-installed)
+    brew install curl
+
+    # Fedora
+    sudo dnf install curl
+    ```
+  </Accordion>
+
+  <Accordion title="Permission denied during install">
+    The install script may need sudo for placing the binary in `/usr/local/bin`:
+
+    ```bash
+    curl -fsSL https://bollyai.dev/install.sh | sudo bash
+    ```
+
+    Or run with a custom install location:
+
+    ```bash
+    curl -fsSL https://bollyai.dev/install.sh | INSTALL_DIR=~/.local/bin bash
+    ```
+  </Accordion>
+
+  <Accordion title="Binary not found after install (command not found: bolly)">
+    The binary might not be in your `PATH`. Add it:
+
+    ```bash
+    # If installed to ~/.local/bin
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+    source ~/.bashrc
+
+    # Or for zsh
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+    source ~/.zshrc
+    ```
+  </Accordion>
+
+  <Accordion title="macOS: 'bolly' can't be opened because Apple cannot check it for malicious software">
+    This happens with unsigned binaries. To allow it:
+
+    1. Go to **System Settings > Privacy & Security**
+    2. Scroll down to the Security section
+    3. Click **Open Anyway** next to the Bolly warning
+
+    Or use the terminal:
+
+    ```bash
+    xattr -d com.apple.quarantine /usr/local/bin/bolly
+    ```
+  </Accordion>
+
+  <Accordion title="Linux: systemd service fails to start">
+    Check the service logs:
+
+    ```bash
+    journalctl -u bolly -n 50 --no-pager
+    ```
+
+    Common causes:
+    - **Missing config file**: Ensure `~/.bolly/data/config.toml` exists
+    - **Invalid API key**: Check that your Anthropic key is correctly formatted
+    - **Port in use**: Another service is using port 8080 — change the port or stop the conflicting service
+    - **Permission issues**: The service user needs read/write access to `~/.bolly/`
+  </Accordion>
+</AccordionGroup>
+
+## Docker Issues
+
+<AccordionGroup>
+  <Accordion title="Container exits immediately">
+    Check the logs:
+
+    ```bash
+    docker logs bolly
+    ```
+
+    Usually caused by:
+    - Missing or invalid `config.toml` in the volume
+    - Missing Anthropic API key
+    - Port conflict (another container using 8080)
+  </Accordion>
+
+  <Accordion title="Can't access Bolly at localhost:8080">
+    Verify the container is running:
+
+    ```bash
+    docker ps | grep bolly
+    ```
+
+    If running, check port mapping:
+
+    ```bash
+    docker port bolly
+    ```
+
+    If not running, check why it stopped:
+
+    ```bash
+    docker logs bolly --tail 50
+    ```
+  </Accordion>
+
+  <Accordion title="Data not persisting across container restarts">
+    Ensure you're using a named volume or bind mount:
+
+    ```bash
+    # Named volume (recommended)
+    docker run -v bolly-data:/data ...
+
+    # Bind mount
+    docker run -v ~/.bolly/data:/data ...
+    ```
+
+    Without `-v`, data is lost when the container is removed.
+  </Accordion>
+</AccordionGroup>
+
+## Desktop App Issues
+
+<AccordionGroup>
+  <Accordion title="Desktop app won't launch on macOS">
+    Try these steps in order:
+
+    1. **Clear quarantine flag**: `xattr -cr /Applications/Bolly.app`
+    2. **Check system requirements**: macOS 12+ required
+    3. **Reinstall**: Delete from Applications and download the latest release
+  </Accordion>
+
+  <Accordion title="Computer use features not working">
+    Computer use requires accessibility permissions:
+
+    - **macOS**: Go to **System Settings > Privacy & Security > Accessibility** and enable Bolly
+    - **Linux**: Ensure Bolly has access to X11/Wayland display server
+    - **Windows**: Run as administrator if screen capture fails
+  </Accordion>
+
+  <Accordion title="Windows SmartScreen blocks the installer">
+    1. Click **More info** on the SmartScreen dialog
+    2. Click **Run anyway**
+
+    This warning appears because the binary isn't signed with a Windows code signing certificate.
+  </Accordion>
+</AccordionGroup>
+
+## API Key Issues
+
+<AccordionGroup>
+  <Accordion title="'Invalid API key' error">
+    Double-check your key in `config.toml`:
+
+    - Anthropic keys start with `sk-ant-`
+    - Ensure there are no extra spaces or newline characters
+    - Verify the key is active in your [Anthropic dashboard](https://console.anthropic.com/settings/keys)
+
+    ```toml
+    [llm.tokens]
+    ANTHROPIC = "sk-ant-api03-your-actual-key"
+    ```
+  </Accordion>
+
+  <Accordion title="'Insufficient credits' or rate limit errors">
+    - Check your [Anthropic billing](https://console.anthropic.com/settings/billing) to ensure you have credits
+    - Anthropic enforces rate limits based on your plan tier
+    - If hitting rate limits frequently, consider upgrading your Anthropic plan
+  </Accordion>
+
+  <Accordion title="Google AI key not working">
+    - Ensure the key was generated at [aistudio.google.com](https://aistudio.google.com), not the regular Google Cloud Console
+    - The key should start with `AIzaSy`
+    - Check that the Generative Language API is enabled in your Google Cloud project
+  </Accordion>
+</AccordionGroup>
+
+## Runtime Issues
+
+<AccordionGroup>
+  <Accordion title="Bolly is slow to respond">
+    Possible causes:
+    - **Network latency**: Bolly calls the Anthropic API for every response. Slow internet = slow responses.
+    - **Long conversation context**: Very long chats use more tokens and take longer to process. Start a new chat periodically.
+    - **Tool-heavy interactions**: Tool calls add extra API round-trips. This is normal.
+  </Accordion>
+
+  <Accordion title="Memory search returning poor results">
+    - **Without Google AI key**: Search uses BM25 (keyword-based) — try using more specific keywords
+    - **With Google AI key**: Vector search provides better semantic matching. Add the key if you haven't.
+    - **New instance**: Memory builds over time. The more you talk to Bolly, the better its recall.
+  </Accordion>
+
+  <Accordion title="Heartbeat not firing">
+    Check that:
+    - Bolly is running (not stopped/paused)
+    - The `heartbeat.md` file exists in the instance directory
+    - There are no errors in the logs during heartbeat cycles
+
+    ```bash
+    # Check logs for heartbeat activity
+    journalctl -u bolly | grep -i heartbeat
+    ```
+  </Accordion>
+
+  <Accordion title="Port 8080 already in use">
+    Find what's using the port:
+
+    ```bash
+    lsof -i :8080
+    ```
+
+    Either stop the conflicting service or run Bolly on a different port:
+
+    ```bash
+    PORT=3000 bolly
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Build Issues (From Source)
+
+<AccordionGroup>
+  <Accordion title="Rust compilation errors">
+    - Ensure you have the **latest stable Rust**: `rustup update stable`
+    - Clean and rebuild: `cargo clean && cargo build --release`
+    - Check for missing system dependencies (OpenSSL, pkg-config)
+
+    ```bash
+    # Ubuntu/Debian
+    sudo apt install build-essential pkg-config libssl-dev
+
+    # macOS
+    brew install openssl pkg-config
+    ```
+  </Accordion>
+
+  <Accordion title="pnpm install fails">
+    - Ensure you're using **pnpm**, not npm or yarn
+    - Install pnpm if missing: `npm install -g pnpm`
+    - Clear cache: `pnpm store prune`
+    - Delete `node_modules` and retry: `rm -rf node_modules && pnpm install`
+  </Accordion>
+
+  <Accordion title="Tauri build fails">
+    Follow the [Tauri 2 prerequisites](https://v2.tauri.app/start/prerequisites/) for your platform. Common missing dependencies:
+
+    ```bash
+    # Ubuntu/Debian
+    sudo apt install libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev
+
+    # Fedora
+    sudo dnf install webkit2gtk4.1-devel libappindicator-gtk3-devel librsvg2-devel
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Getting Help
+
+If your issue isn't covered here:
+
+<CardGroup cols={2}>
+  <Card title="GitHub Issues" icon="github" href="https://github.com/triangle-int/bolly/issues">
+    Search existing issues or file a new one with logs and reproduction steps.
+  </Card>
+  <Card title="Discord Community" icon="discord" href="https://discord.gg/bolly">
+    Ask the community for help — someone has probably encountered the same issue.
+  </Card>
+</CardGroup>
+
+When reporting issues, include:
+- Your operating system and version
+- Installation method used
+- Relevant log output
+- Steps to reproduce the problem

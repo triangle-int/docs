@@ -1,0 +1,248 @@
+---
+title: "Build from Source"
+description: "Clone the repository and build the Bolly server, client, and desktop app from source"
+icon: "code-branch"
+---
+
+Building from source is for developers who want to contribute, customize Bolly's behavior, or run the latest unreleased changes.
+
+## Prerequisites
+
+<CardGroup cols={2}>
+  <Card title="Required">
+    - **Rust** (latest stable via [rustup](https://rustup.rs))
+    - **Node.js** (LTS, v20+)
+    - **pnpm** (NOT npm or yarn)
+    - **Git**
+  </Card>
+  <Card title="For Desktop App">
+    - All of the above, plus:
+    - **Tauri 2 prerequisites** ([see platform guide](https://v2.tauri.app/start/prerequisites/))
+    - macOS: Xcode Command Line Tools
+    - Linux: `webkit2gtk`, `libappindicator`, `librsvg`
+    - Windows: Visual Studio C++ Build Tools, WebView2
+  </Card>
+</CardGroup>
+
+## Clone the Repository
+
+```bash
+git clone https://github.com/triangle-int/bolly.git
+cd bolly
+```
+
+## Project Structure
+
+```
+bolly/
+├── server/         # Rust backend (Axum)
+├── client/         # SvelteKit frontend
+├── desktop/        # Tauri 2 desktop app
+├── landing/        # Marketing site (SvelteKit)
+└── VERSION         # Single source of truth for version
+```
+
+## Building the Server
+
+The server is a Rust application using Axum. It embeds the compiled client at build time via `rust-embed`.
+
+<Steps>
+<Step title="Build the client first">
+
+The server embeds the client's build output, so build the client first:
+
+```bash
+cd client
+pnpm install
+pnpm build
+cd ..
+```
+
+</Step>
+
+<Step title="Build the server">
+
+```bash
+cd server
+cargo build --release
+```
+
+The binary will be at `target/release/bolly`.
+
+</Step>
+
+<Step title="Run the server">
+
+```bash
+cargo run --release
+```
+
+Or run the binary directly:
+
+```bash
+./target/release/bolly
+```
+
+Bolly will be available at [http://localhost:8080](http://localhost:8080).
+
+</Step>
+</Steps>
+
+<Tip>For development, use `cargo run` (without `--release`) for faster compilation with debug symbols.</Tip>
+
+## Development Mode (Hot Reload)
+
+For active development, run the server and client separately with hot reload:
+
+<Steps>
+<Step title="Start the server in dev mode">
+
+```bash
+cd server
+cargo run
+```
+
+</Step>
+
+<Step title="Start the client dev server">
+
+In a separate terminal:
+
+```bash
+cd client
+pnpm install
+pnpm dev
+```
+
+The client dev server runs on `http://localhost:5173` with hot module replacement.
+
+</Step>
+</Steps>
+
+## Building the Desktop App
+
+The desktop app wraps the client in a Tauri 2 shell, adding computer use capabilities.
+
+<Steps>
+<Step title="Install Tauri prerequisites">
+
+Follow the [Tauri 2 prerequisites guide](https://v2.tauri.app/start/prerequisites/) for your platform.
+
+</Step>
+
+<Step title="Install dependencies">
+
+```bash
+cd desktop
+pnpm install
+```
+
+</Step>
+
+<Step title="Development mode">
+
+```bash
+pnpm tauri dev
+```
+
+This starts the desktop app with hot reload.
+
+</Step>
+
+<Step title="Build for production">
+
+```bash
+pnpm tauri build
+```
+
+Built artifacts will be in `desktop/src-tauri/target/release/bundle/`.
+
+</Step>
+</Steps>
+
+## Building the Landing Page
+
+If you want to run or modify the marketing site:
+
+```bash
+cd landing
+pnpm install
+pnpm dev
+```
+
+The landing page runs on `http://localhost:5173`.
+
+<Note>The landing page requires a PostgreSQL database (Neon) for user management features. For just viewing the site, the dev server works without it.</Note>
+
+## Environment Setup
+
+### Server configuration
+
+The server reads from `~/.bolly/data/config.toml`. Create this file before running:
+
+```bash
+mkdir -p ~/.bolly/data
+```
+
+Create `~/.bolly/data/config.toml` with at minimum:
+
+```toml
+[llm.tokens]
+ANTHROPIC = "sk-ant-your-key-here"
+```
+
+### Custom data directory
+
+Set the `BOLLY_HOME` environment variable to use a different data directory:
+
+```bash
+BOLLY_HOME=/path/to/data cargo run
+```
+
+## Code Style & Linting
+
+Before submitting changes:
+
+```bash
+# Rust
+cd server
+cargo fmt
+cargo clippy
+
+# Client/Desktop
+cd client  # or desktop
+pnpm check
+```
+
+## Running Tests
+
+```bash
+# Server tests
+cd server
+cargo test
+
+# Client tests
+cd client
+pnpm test
+```
+
+## Contributing
+
+1. Fork the repository from the `main` branch
+2. Create a feature branch
+3. Test your changes locally
+4. Keep commit messages short and imperative
+5. Submit a pull request
+
+<Info>See [CONTRIBUTING.md](https://github.com/triangle-int/bolly/blob/main/CONTRIBUTING.md) in the repository for full guidelines.</Info>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration" icon="gear" href="/installation/configuration">
+    Full config.toml reference for customizing Bolly's behavior.
+  </Card>
+  <Card title="API Keys" icon="key" href="/installation/api-keys">
+    Set up API keys for Anthropic, Google AI, and ElevenLabs.
+  </Card>
+</CardGroup>

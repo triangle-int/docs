@@ -1,0 +1,84 @@
+---
+title: "Installation Overview"
+description: "All the ways to install and run Bolly"
+---
+
+Bolly supports multiple installation methods depending on your use case. All methods are self-hosted — your data stays on your machine.
+
+## Installation Methods
+
+| Method | Best For | Platforms | Computer Use |
+|--------|----------|-----------|--------------|
+| [One-Line Install](/installation/quick-install) | Fastest setup, personal use | Linux, macOS | No |
+| [Docker](/installation/docker) | Production, servers, easy updates | Any (Docker required) | No |
+| [Desktop App](/installation/desktop-app) | Full experience with computer control | macOS, Windows, Linux | Yes |
+| [From Source](/installation/from-source) | Contributing, customization | Any (Rust + Node.js required) | Yes (desktop) |
+
+## System Requirements
+
+<CardGroup cols={2}>
+  <Card title="Minimum Hardware">
+    - 2 CPU cores
+    - 2 GB RAM
+    - 500 MB disk space (plus storage for memory/drops)
+    - Internet connection (for LLM API calls)
+  </Card>
+  <Card title="Supported Platforms">
+    - **Linux**: x86_64, aarch64 (Ubuntu 20.04+, Debian 11+, Fedora 36+, Arch)
+    - **macOS**: Apple Silicon (M1+) and Intel (macOS 12+)
+    - **Windows**: x86_64 (Windows 10+, desktop app only)
+    - **Docker**: Any platform with Docker Engine 20+
+  </Card>
+</CardGroup>
+
+## Required API Keys
+
+Bolly uses a **BYOK** (Bring Your Own Key) model. You need at minimum:
+
+| Key | Provider | Required | Purpose |
+|-----|----------|----------|---------|
+| Anthropic | [console.anthropic.com](https://console.anthropic.com) | **Yes** | Chat, reasoning, all tool use |
+| Google AI | [aistudio.google.com](https://aistudio.google.com) | No | Vector memory search, video/audio analysis |
+| ElevenLabs | [elevenlabs.io](https://elevenlabs.io) | No | Text-to-speech voice output |
+
+<Info>See the [API Keys guide](/installation/api-keys) for detailed setup instructions for each provider.</Info>
+
+## Data Directory
+
+All Bolly data lives in `~/.bolly/` by default (configurable via `BOLLY_HOME` environment variable):
+
+```
+~/.bolly/
+├── config.toml              # Main configuration file
+└── instances/
+    └── {instance-slug}/
+        ├── soul.md          # Personality definition
+        ├── heartbeat.md     # Heartbeat behavior rules
+        ├── mood.json        # Current emotional state
+        ├── memory/          # Persistent memory library
+        ├── drops/           # Autonomous creative artifacts
+        ├── uploads/         # User-uploaded files
+        ├── skills/          # Installed skill plugins
+        └── chats/
+            └── {chat_id}/
+                └── rig_history.json
+```
+
+## What's Next
+
+Pick your installation method and follow the guide:
+
+<CardGroup cols={2}>
+  <Card title="One-Line Install" icon="bolt" href="/installation/quick-install">
+    The fastest path — a single curl command.
+  </Card>
+  <Card title="Docker" icon="docker" href="/installation/docker">
+    Containerized deployment with persistent volumes.
+  </Card>
+  <Card title="Desktop App" icon="desktop" href="/installation/desktop-app">
+    Native app with computer use support.
+  </Card>
+  <Card title="From Source" icon="code-branch" href="/installation/from-source">
+    Build everything from the repository.
+  </Card>
+</CardGroup>

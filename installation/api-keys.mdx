@@ -1,0 +1,172 @@
+---
+title: "API Keys"
+description: "Set up API keys for Anthropic, Google AI, ElevenLabs, and other integrations"
+icon: "key"
+---
+
+Bolly uses a **BYOK** (Bring Your Own Key) model — you provide your own API keys. This means your conversations go directly to the providers, and Bolly never routes your data through third-party servers.
+
+## Required: Anthropic
+
+Anthropic's Claude is Bolly's underlying LLM. This key is **required** for Bolly to function.
+
+<Steps>
+<Step title="Create an Anthropic account">
+  Go to [console.anthropic.com](https://console.anthropic.com) and sign up.
+</Step>
+
+<Step title="Generate an API key">
+  Navigate to **Settings > API Keys** and click **Create Key**. Give it a descriptive name like "Bolly".
+</Step>
+
+<Step title="Add credits">
+  Anthropic requires prepaid credits. Add funds under **Settings > Billing**. Usage depends on how much you interact with Bolly — typical usage is $5-20/month.
+</Step>
+
+<Step title="Add the key to Bolly">
+
+Edit your `config.toml`:
+
+```toml
+[llm.tokens]
+ANTHROPIC = "sk-ant-api03-your-key-here"
+```
+
+</Step>
+</Steps>
+
+<Warning>Keep your API key secret. Never share it, commit it to version control, or expose it in client-side code. Bolly stores it locally in your config file.</Warning>
+
+### Anthropic pricing considerations
+
+Bolly uses Claude for all conversations, reasoning, and tool use. Costs depend on:
+
+- **Conversation length** — longer chats use more tokens
+- **Tool usage** — each tool call involves additional API calls
+- **Heartbeat cycles** — autonomous wake-ups consume tokens
+- **Memory operations** — search and retrieval use the API
+
+<Tip>Start with $10-20 in credits and monitor usage through the [Anthropic dashboard](https://console.anthropic.com/settings/billing).</Tip>
+
+## Optional: Google AI
+
+Google AI provides two features for Bolly:
+
+1. **Vector embeddings** for semantic memory search (beyond keyword-based BM25)
+2. **Video and audio analysis** for understanding media files
+
+<Steps>
+<Step title="Get a Google AI API key">
+  Go to [aistudio.google.com](https://aistudio.google.com) and sign in with your Google account. Click **Get API key** in the sidebar.
+</Step>
+
+<Step title="Create or select a project">
+  Choose an existing Google Cloud project or create a new one.
+</Step>
+
+<Step title="Add the key to Bolly">
+
+```toml
+[llm.tokens]
+ANTHROPIC = "sk-ant-your-key-here"
+GOOGLE_AI = "AIzaSy-your-google-ai-key-here"
+```
+
+</Step>
+</Steps>
+
+### What changes with Google AI enabled
+
+| Feature | Without Google AI | With Google AI |
+|---------|------------------|----------------|
+| Memory search | BM25 (keyword-based) | BM25 + vector similarity |
+| Search quality | Good for exact terms | Better for conceptual queries |
+| Media analysis | Not available | Video and audio understanding |
+
+<Info>Google AI's free tier is generous. Most Bolly users won't exceed the free quota for embeddings.</Info>
+
+## Optional: ElevenLabs
+
+ElevenLabs enables Bolly to speak with a synthesized voice using text-to-speech.
+
+<Steps>
+<Step title="Create an ElevenLabs account">
+  Go to [elevenlabs.io](https://elevenlabs.io) and sign up.
+</Step>
+
+<Step title="Get your API key">
+  Navigate to your profile settings and copy your API key.
+</Step>
+
+<Step title="Add the key to Bolly">
+
+```toml
+[llm.tokens]
+ANTHROPIC = "sk-ant-your-key-here"
+ELEVENLABS = "your-elevenlabs-key-here"
+```
+
+</Step>
+</Steps>
+
+<Note>ElevenLabs offers a free tier with limited characters per month. Paid plans start at $5/month for more usage.</Note>
+
+## Full Config Example
+
+Here's a complete `[llm.tokens]` section with all supported keys:
+
+```toml
+[llm.tokens]
+# Required — powers all of Bolly's reasoning and conversation
+ANTHROPIC = "sk-ant-api03-your-key-here"
+
+# Optional — enables semantic memory search and media analysis
+GOOGLE_AI = "AIzaSy-your-google-ai-key-here"
+
+# Optional — enables text-to-speech voice output
+ELEVENLABS = "your-elevenlabs-key-here"
+```
+
+## Security Best Practices
+
+- **Never share your API keys** — they grant full access to your accounts
+- **Don't commit config.toml to git** — add `config.toml` to your `.gitignore`
+- **Rotate keys periodically** — regenerate keys every few months
+- **Monitor usage** — check provider dashboards for unexpected spikes
+- **Use separate keys for Bolly** — don't reuse keys from other projects
+
+## Verifying Your Keys
+
+After adding your keys, restart Bolly and check the logs for confirmation:
+
+<CodeGroup>
+
+```bash Linux
+sudo systemctl restart bolly
+journalctl -u bolly -n 20
+```
+
+```bash macOS
+launchctl unload ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+```
+
+```bash Docker
+docker restart bolly
+docker logs bolly --tail 20
+```
+
+</CodeGroup>
+
+Look for messages confirming successful API connection. If a key is invalid, Bolly will log an error with details.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration" icon="gear" href="/installation/configuration">
+    Customize personality, heartbeat, and other settings.
+  </Card>
+  <Card title="Troubleshooting" icon="wrench" href="/installation/troubleshooting">
+    Fix common API key and connection issues.
+  </Card>
+</CardGroup>

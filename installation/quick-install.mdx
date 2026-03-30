@@ -1,0 +1,209 @@
+---
+title: "One-Line Install"
+description: "Install Bolly on Linux or macOS with a single command"
+icon: "bolt"
+---
+
+The fastest way to get Bolly running. A single curl command downloads the latest binary, creates your config, and sets up a background service.
+
+## Install
+
+```bash
+curl -fsSL https://bollyai.dev/install.sh | bash
+```
+
+This script will:
+
+1. Detect your operating system and architecture
+2. Download the latest Bolly binary from GitHub releases
+3. Place it in a system-accessible location
+4. Create the default config directory at `~/.bolly/`
+5. Generate a default `config.toml`
+6. Set up a background service (systemd on Linux, launchd on macOS)
+
+<Info>The install script is open source. You can [review it on GitHub](https://github.com/triangle-int/bolly) before running.</Info>
+
+## Post-Install Configuration
+
+After installation, you **must** add your Anthropic API key before starting Bolly.
+
+<Steps>
+<Step title="Open your config file">
+
+```bash
+nano ~/.bolly/data/config.toml
+```
+
+Or use any text editor of your choice.
+
+</Step>
+
+<Step title="Add your Anthropic API key">
+
+Find the `[llm.tokens]` section and add your key:
+
+```toml
+[llm.tokens]
+ANTHROPIC = "sk-ant-your-key-here"
+```
+
+<Warning>Without a valid Anthropic API key, Bolly will not function. Get one at [console.anthropic.com](https://console.anthropic.com).</Warning>
+
+</Step>
+
+<Step title="Start the service">
+
+<CodeGroup>
+
+```bash Linux (systemd)
+sudo systemctl start bolly
+sudo systemctl enable bolly  # auto-start on boot
+```
+
+```bash macOS (launchd)
+launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+```
+
+</CodeGroup>
+
+</Step>
+
+<Step title="Open Bolly">
+
+Navigate to [http://localhost:8080](http://localhost:8080) in your browser.
+
+</Step>
+</Steps>
+
+## Managing the Service
+
+### Check status
+
+<CodeGroup>
+
+```bash Linux
+sudo systemctl status bolly
+```
+
+```bash macOS
+launchctl list | grep bolly
+```
+
+</CodeGroup>
+
+### Stop the service
+
+<CodeGroup>
+
+```bash Linux
+sudo systemctl stop bolly
+```
+
+```bash macOS
+launchctl unload ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+```
+
+</CodeGroup>
+
+### Restart after config changes
+
+<CodeGroup>
+
+```bash Linux
+sudo systemctl restart bolly
+```
+
+```bash macOS
+launchctl unload ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+```
+
+</CodeGroup>
+
+### View logs
+
+<CodeGroup>
+
+```bash Linux
+journalctl -u bolly -f
+```
+
+```bash macOS
+tail -f ~/Library/Logs/bolly.log
+```
+
+</CodeGroup>
+
+## Updating
+
+To update Bolly to the latest version, run the install script again:
+
+```bash
+curl -fsSL https://bollyai.dev/install.sh | bash
+```
+
+The script detects existing installations and performs an in-place upgrade while preserving your config and data.
+
+<Tip>Check the [GitHub releases](https://github.com/triangle-int/bolly/releases) page to see what's new in each version.</Tip>
+
+## Uninstalling
+
+To remove Bolly completely:
+
+<Steps>
+<Step title="Stop the service">
+
+<CodeGroup>
+
+```bash Linux
+sudo systemctl stop bolly
+sudo systemctl disable bolly
+```
+
+```bash macOS
+launchctl unload ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+```
+
+</CodeGroup>
+
+</Step>
+
+<Step title="Remove the binary and service files">
+
+<CodeGroup>
+
+```bash Linux
+sudo rm /usr/local/bin/bolly
+sudo rm /etc/systemd/system/bolly.service
+sudo systemctl daemon-reload
+```
+
+```bash macOS
+rm ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+```
+
+</CodeGroup>
+
+</Step>
+
+<Step title="Remove data (optional)">
+
+<Warning>This permanently deletes all Bolly data including memory, conversations, and drops.</Warning>
+
+```bash
+rm -rf ~/.bolly
+```
+
+</Step>
+</Steps>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration" icon="gear" href="/installation/configuration">
+    Customize personality, heartbeat, and memory settings.
+  </Card>
+  <Card title="API Keys" icon="key" href="/installation/api-keys">
+    Add optional integrations like Google AI and ElevenLabs.
+  </Card>
+</CardGroup>

@@ -1,0 +1,228 @@
+---
+title: "Docker Installation"
+description: "Run Bolly in a container with persistent storage and automatic restarts"
+icon: "docker"
+---
+
+Docker is the recommended way to run Bolly on servers or when you want isolated, reproducible deployments with easy updates.
+
+## Prerequisites
+
+- Docker Engine 20+ or Docker Desktop
+- An Anthropic API key ([console.anthropic.com](https://console.anthropic.com))
+
+## Quick Start
+
+```bash
+docker run -d \
+  --name bolly \
+  -p 8080:8080 \
+  -v bolly-data:/data \
+  -e BOLLY_HOME=/data \
+  --restart always \
+  ghcr.io/triangle-int/bolly:latest
+```
+
+Open [http://localhost:8080](http://localhost:8080) in your browser.
+
+<Info>On first run, Bolly generates a default `config.toml` inside the volume. You'll need to add your API key before it works.</Info>
+
+## Configuration with Docker
+
+### Option 1: Edit config inside the volume
+
+Find the volume mount path and edit the config:
+
+```bash
+# Find where Docker stores the volume
+docker volume inspect bolly-data --format '{{ .Mountpoint }}'
+
+# Edit the config (requires sudo on Linux)
+sudo nano $(docker volume inspect bolly-data --format '{{ .Mountpoint }}')/config.toml
+```
+
+Add your API key:
+
+```toml
+[llm.tokens]
+ANTHROPIC = "sk-ant-your-key-here"
+```
+
+Then restart the container:
+
+```bash
+docker restart bolly
+```
+
+### Option 2: Bind mount a local config directory
+
+Create a config directory first:
+
+```bash
+mkdir -p ~/.bolly/data
+```
+
+Create `~/.bolly/data/config.toml`:
+
+```toml
+[llm.tokens]
+ANTHROPIC = "sk-ant-your-key-here"
+```
+
+Run with a bind mount:
+
+```bash
+docker run -d \
+  --name bolly \
+  -p 8080:8080 \
+  -v ~/.bolly/data:/data \
+  -e BOLLY_HOME=/data \
+  --restart always \
+  ghcr.io/triangle-int/bolly:latest
+```
+
+### Option 3: Environment variable for the API key
+
+```bash
+docker run -d \
+  --name bolly \
+  -p 8080:8080 \
+  -v bolly-data:/data \
+  -e BOLLY_HOME=/data \
+  -e ANTHROPIC_API_KEY="sk-ant-your-key-here" \
+  --restart always \
+  ghcr.io/triangle-int/bolly:latest
+```
+
+## Docker Compose
+
+For a more manageable setup, use Docker Compose:
+
+```yaml docker-compose.yml
+services:
+  bolly:
+    image: ghcr.io/triangle-int/bolly:latest
+    container_name: bolly
+    ports:
+      - "8080:8080"
+    volumes:
+      - bolly-data:/data
+    environment:
+      - BOLLY_HOME=/data
+    restart: always
+
+volumes:
+  bolly-data:
+```
+
+Run it:
+
+```bash
+docker compose up -d
+```
+
+## Managing the Container
+
+### View logs
+
+```bash
+docker logs bolly -f
+```
+
+### Stop Bolly
+
+```bash
+docker stop bolly
+```
+
+### Start Bolly
+
+```bash
+docker start bolly
+```
+
+### Restart after config changes
+
+```bash
+docker restart bolly
+```
+
+### Remove the container (preserves data)
+
+```bash
+docker rm -f bolly
+```
+
+## Updating
+
+Pull the latest image and recreate the container:
+
+```bash
+docker pull ghcr.io/triangle-int/bolly:latest
+docker rm -f bolly
+docker run -d \
+  --name bolly \
+  -p 8080:8080 \
+  -v bolly-data:/data \
+  -e BOLLY_HOME=/data \
+  --restart always \
+  ghcr.io/triangle-int/bolly:latest
+```
+
+With Docker Compose:
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
+<Tip>Your data is stored in the `bolly-data` volume and persists across container updates.</Tip>
+
+## Custom Port
+
+To run Bolly on a different port, change the host port mapping:
+
+```bash
+docker run -d \
+  --name bolly \
+  -p 3000:8080 \
+  -v bolly-data:/data \
+  -e BOLLY_HOME=/data \
+  --restart always \
+  ghcr.io/triangle-int/bolly:latest
+```
+
+Bolly would then be available at [http://localhost:3000](http://localhost:3000).
+
+## Running Behind a Reverse Proxy
+
+If running Bolly behind Nginx, Caddy, or another reverse proxy, ensure WebSocket support is enabled — Bolly uses WebSockets for real-time communication.
+
+Example Nginx config:
+
+```nginx
+server {
+    listen 443 ssl;
+    server_name bolly.yourdomain.com;
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Configuration" icon="gear" href="/installation/configuration">
+    Full config.toml reference and customization options.
+  </Card>
+  <Card title="API Keys" icon="key" href="/installation/api-keys">
+    Set up optional integrations beyond the Anthropic key.
+  </Card>
+</CardGroup>

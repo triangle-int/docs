@@ -1,97 +1,96 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "Bolly Documentation"
+description: "Learn how to install, configure, and use Bolly — your open-source AI companion with persistent memory, computer use, and creative autonomy."
 ---
 
-## Setting up
+## Welcome to Bolly
 
-Get your documentation site up and running in minutes.
+Bolly is an open-source AI companion with persistent memory, computer use capabilities, and creative autonomy. Not a chatbot — a presence that remembers your goals, notices your mood, helps you work, and checks in when you've been quiet too long.
 
 <Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
+  title="Quick Install"
+  icon="bolt"
+  href="/installation/quick-install"
   horizontal
 >
-  Follow our three step quickstart guide.
+  Get Bolly running in under a minute with a single command.
 </Card>
 
-## Make it yours
+## Choose your path
 
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
+<CardGroup cols={2}>
   <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card
-    title="API documentation"
+    title="One-Line Install"
     icon="terminal"
+    href="/installation/quick-install"
+  >
+    Install via curl on Linux or macOS. The fastest way to get started.
+  </Card>
+  <Card
+    title="Docker"
+    icon="docker"
+    href="/installation/docker"
+  >
+    Run Bolly in a container with persistent storage and auto-restart.
+  </Card>
+  <Card
+    title="Desktop App"
+    icon="desktop"
+    href="/installation/desktop-app"
+  >
+    Download the native app for macOS, Windows, or Linux with computer use support.
+  </Card>
+  <Card
+    title="Build from Source"
+    icon="code-branch"
+    href="/installation/from-source"
+  >
+    Clone the repo and build the server, client, and desktop app yourself.
+  </Card>
+</CardGroup>
+
+## After installation
+
+<CardGroup cols={2}>
+  <Card
+    title="Configuration"
+    icon="gear"
+    href="/installation/configuration"
+  >
+    Customize Bolly's behavior through config.toml — personality, heartbeat, memory, and more.
+  </Card>
+  <Card
+    title="API Keys"
+    icon="key"
+    href="/installation/api-keys"
+  >
+    Set up your Anthropic API key and optional integrations like Google AI and ElevenLabs.
+  </Card>
+  <Card
+    title="Troubleshooting"
+    icon="wrench"
+    href="/installation/troubleshooting"
+  >
+    Solutions for common installation issues and error messages.
+  </Card>
+  <Card
+    title="API Reference"
+    icon="code"
     href="/api-reference/introduction"
   >
-    Auto-generate API documentation from OpenAPI specifications.
+    Explore Bolly's API endpoints for programmatic access.
   </Card>
-</Columns>
+</CardGroup>
 
-## Create beautiful pages
+## What makes Bolly different
 
-Everything you need to create world-class documentation.
-
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
-
-## Need inspiration?
-
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+| Feature | Description |
+|---------|-------------|
+| **Persistent Memory** | File-based memory library with BM25 + vector search. Bolly remembers across sessions. |
+| **Mood System** | Emotional state shifts based on conversation context and interaction patterns. |
+| **Heartbeat Autonomy** | Wakes every 45 minutes to reflect, update mood, and create drops. |
+| **Drops** | Autonomous creative artifacts — art, writing, code — generated during idle cycles. |
+| **Computer Use** | Full desktop control — screenshots, keyboard, mouse, bash, file management. |
+| **50+ Tools** | File operations, shell commands, web browsing, email, calendar, Google Drive, and more. |
+| **BYOK** | Bring Your Own Key — you provide your own Anthropic API key. Your data stays yours. |
+| **Open Source** | MIT licensed. Fully self-hostable. No vendor lock-in. |
