@@ -4,6 +4,32 @@ description: "Solutions for common Bolly installation and runtime issues"
 icon: "wrench"
 ---
 
+## Viewing logs
+
+The first step when debugging any issue is to check the logs. How you access them depends on your platform and installation method:
+
+<CodeGroup>
+
+```bash macOS (one-line install)
+tail -f ~/.bolly/bolly.log
+```
+
+```bash Linux (systemd, root)
+sudo journalctl -u bolly -f
+```
+
+```bash Linux (systemd, user)
+journalctl --user -u bolly -f
+```
+
+```bash Docker
+docker logs bolly -f
+```
+
+</CodeGroup>
+
+<Tip>The `-f` flag streams logs in real time. Press `Ctrl+C` to stop. If you installed Bolly to a custom directory, replace `~/.bolly` with your `BOLLY_DIR` path.</Tip>
+
 ## Installation issues
 
 <AccordionGroup>
@@ -72,7 +98,7 @@ icon: "wrench"
     ```
 
     Common causes:
-    - **Port in use**: Another service is using port 8080 — change the port or stop the conflicting service
+    - **Port in use**: Another service is using port 26559 — change the port or stop the conflicting service
     - **Permission issues**: The service user needs read/write access to `~/.bolly/`
   </Accordion>
 </AccordionGroup>
@@ -88,11 +114,11 @@ icon: "wrench"
     ```
 
     Usually caused by:
-    - Port conflict (another container using 8080)
+    - Port conflict (another container using 26559)
     - Volume permission issues
   </Accordion>
 
-  <Accordion title="Can't access Bolly at localhost:8080">
+  <Accordion title="Can't access Bolly at localhost:26559">
     Verify the container is running:
 
     ```bash
@@ -206,11 +232,11 @@ icon: "wrench"
     ```
   </Accordion>
 
-  <Accordion title="Port 8080 already in use">
+  <Accordion title="Port 26559 already in use">
     Find what's using the port:
 
     ```bash
-    lsof -i :8080
+    lsof -i :26559
     ```
 
     Either stop the conflicting service or run Bolly on a different port:

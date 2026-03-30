@@ -33,7 +33,7 @@ launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
 ```
 
 ```bash Docker
-docker run -d --name bolly -p 8080:8080 -v bolly-data:/data -e BOLLY_HOME=/data --restart always ghcr.io/triangle-int/bolly:latest
+docker run -d --name bolly -p 26559:26559 -v bolly-data:/data -e BOLLY_HOME=/data --restart always ghcr.io/triangle-int/bolly:latest
 ```
 
 </CodeGroup>
@@ -42,7 +42,7 @@ docker run -d --name bolly -p 8080:8080 -v bolly-data:/data -e BOLLY_HOME=/data 
 
 <Step title="Open your browser">
 
-Go to [http://localhost:8080](http://localhost:8080). Bolly will walk you through setup — including entering your Anthropic API key — right in the browser.
+Go to [http://localhost:26559](http://localhost:26559). Bolly will walk you through setup — including entering your Anthropic API key — right in the browser.
 
 <Info>You'll need an Anthropic API key to use Bolly. Get one at [console.anthropic.com](https://console.anthropic.com) if you don't have one yet.</Info>
 

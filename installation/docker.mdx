@@ -16,14 +16,14 @@ Docker is the recommended way to run Bolly on servers or when you want isolated,
 ```bash
 docker run -d \
   --name bolly \
-  -p 8080:8080 \
+  -p 26559:26559 \
   -v bolly-data:/data \
   -e BOLLY_HOME=/data \
   --restart always \
   ghcr.io/triangle-int/bolly:latest
 ```
 
-Open [http://localhost:8080](http://localhost:8080) in your browser. Bolly will guide you through the initial setup — including entering your API key — right in the web interface.
+Open [http://localhost:26559](http://localhost:26559) in your browser. Bolly will guide you through the initial setup — including entering your API key — right in the web interface.
 
 ## Docker Compose
 
@@ -35,7 +35,7 @@ services:
     image: ghcr.io/triangle-int/bolly:latest
     container_name: bolly
     ports:
-      - "8080:8080"
+      - "26559:26559"
     volumes:
       - bolly-data:/data
     environment:
@@ -102,7 +102,7 @@ To run Bolly on a different port, change the host port mapping:
 ```bash
 docker run -d \
   --name bolly \
-  -p 3000:8080 \
+  -p 3000:26559 \
   -v bolly-data:/data \
   -e BOLLY_HOME=/data \
   --restart always \
@@ -123,7 +123,7 @@ server {
     server_name bolly.yourdomain.com;
 
     location / {
-        proxy_pass http://localhost:8080;
+        proxy_pass http://localhost:26559;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";

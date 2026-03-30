@@ -45,7 +45,7 @@ launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
 
 <Step title="Open Bolly in your browser">
 
-Go to [http://localhost:8080](http://localhost:8080). Bolly will guide you through the initial setup — including entering your API key — directly in the web interface.
+Go to [http://localhost:26559](http://localhost:26559). Bolly will guide you through the initial setup — including entering your API key — directly in the web interface.
 
 <Info>You'll need an Anthropic API key. Get one at [console.anthropic.com](https://console.anthropic.com) if you don't have one yet.</Info>
 
@@ -102,11 +102,11 @@ launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
 <CodeGroup>
 
 ```bash Linux
-journalctl -u bolly -f
+sudo journalctl -u bolly -f
 ```
 
 ```bash macOS
-tail -f ~/Library/Logs/bolly.log
+tail -f ~/.bolly/bolly.log
 ```
 
 </CodeGroup>
