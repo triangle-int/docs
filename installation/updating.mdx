@@ -4,6 +4,12 @@ description: "Keep Bolly up to date across all installation methods"
 icon: "arrows-rotate"
 ---
 
+## From the web UI
+
+Bolly checks for updates automatically every 5 minutes. When a new version is available, an update indicator appears in the bottom-left corner of the interface next to the version number. Click it to apply the update — Bolly downloads the new binary, restarts itself, and reloads the page automatically.
+
+You can also click the version label (e.g., `v0.24.0`) at any time to open the changelog panel, which shows release notes and lets you switch between the stable and nightly channels.
+
 ## One-line install
 
 The simplest way to update is to run the install script again:
@@ -107,7 +113,11 @@ Bolly supports two release channels:
 | **stable** | Default. Published releases only. | Production-ready |
 | **nightly** | Latest builds from `main`. Updated frequently. | May contain bugs |
 
-### Switch to nightly
+### Switch channels from the web UI
+
+Open the changelog panel by clicking the version label in the bottom-left corner. Use the channel selector to switch between **stable** and **nightly**. The next update check will use the new channel.
+
+### Switch channels from the terminal
 
 Set `BOLLY_CHANNEL=nightly` when installing or updating:
 
@@ -121,7 +131,7 @@ Or when using the built-in update command:
 BOLLY_CHANNEL=nightly ~/.bolly/bin/update
 ```
 
-### Switch back to stable
+To switch back to stable:
 
 ```bash
 BOLLY_CHANNEL=stable curl -fsSL https://bollyai.dev/install.sh | bash
@@ -131,4 +141,4 @@ BOLLY_CHANNEL=stable curl -fsSL https://bollyai.dev/install.sh | bash
 
 ## What's new
 
-Check the [GitHub releases](https://github.com/triangle-int/bolly/releases) page to see changelogs for each version.
+Click the version label in Bolly's web interface to view the changelog, or check the [GitHub releases](https://github.com/triangle-int/bolly/releases) page.
