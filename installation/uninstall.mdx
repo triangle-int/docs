@@ -1,0 +1,163 @@
+---
+title: "Uninstall"
+description: "Remove Bolly from your system using the uninstall script or manually"
+icon: "trash-can"
+---
+
+## One-line uninstall
+
+The fastest way to remove Bolly. This stops the service, removes the binary, cleans up service files, and removes the PATH entry from your shell config.
+
+```bash
+curl -fsSL https://bollyai.dev/uninstall.sh | bash
+```
+
+When run in an interactive terminal, the script asks whether to keep or delete your data. When piped non-interactively, it removes everything by default.
+
+<Info>The uninstall script is open source. You can [review it on GitHub](https://github.com/triangle-int/bolly/blob/main/scripts/uninstall.sh) before running.</Info>
+
+## Options
+
+Control behavior with environment variables:
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `KEEP_DATA=1` | Remove everything | Keep your data (config, memories, chats, drops) and only remove the binary and service |
+| `BOLLY_DIR=/custom/path` | `~/.bolly` | Uninstall from a custom directory if you installed Bolly to a non-default location |
+
+### Keep your data
+
+To remove Bolly but preserve your conversations, memories, and config:
+
+```bash
+KEEP_DATA=1 curl -fsSL https://bollyai.dev/uninstall.sh | bash
+```
+
+Your data stays at `~/.bolly/data/`. You can reinstall later and pick up where you left off.
+
+### Custom install directory
+
+If you installed Bolly to a custom path:
+
+```bash
+BOLLY_DIR=/opt/bolly curl -fsSL https://bollyai.dev/uninstall.sh | bash
+```
+
+## What the script does
+
+<Steps>
+<Step title="Stops the service">
+
+Unloads the launchd plist on macOS or stops and disables the systemd unit on Linux. Kills any remaining Bolly process.
+
+</Step>
+
+<Step title="Removes service files">
+
+<CodeGroup>
+
+```bash macOS
+~/Library/LaunchAgents/dev.bollyai.bolly.plist
+```
+
+```bash Linux (root)
+/etc/systemd/system/bolly.service
+```
+
+```bash Linux (user)
+~/.config/systemd/user/bolly.service
+```
+
+</CodeGroup>
+
+</Step>
+
+<Step title="Removes files">
+
+Deletes the `~/.bolly/bin/` directory and log file. If `KEEP_DATA` is not set, removes the entire `~/.bolly/` directory.
+
+</Step>
+
+<Step title="Cleans shell config">
+
+Removes the Bolly PATH entry from your shell rc file (`.bashrc`, `.zshrc`, etc.).
+
+</Step>
+</Steps>
+
+## Manual uninstall
+
+If you prefer to remove Bolly by hand:
+
+<Steps>
+<Step title="Stop the service">
+
+<CodeGroup>
+
+```bash Linux
+sudo systemctl stop bolly
+sudo systemctl disable bolly
+```
+
+```bash macOS
+launchctl unload ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+```
+
+</CodeGroup>
+
+</Step>
+
+<Step title="Remove service files">
+
+<CodeGroup>
+
+```bash Linux (root)
+sudo rm /etc/systemd/system/bolly.service
+sudo systemctl daemon-reload
+```
+
+```bash Linux (user)
+rm ~/.config/systemd/user/bolly.service
+systemctl --user daemon-reload
+```
+
+```bash macOS
+rm ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+```
+
+</CodeGroup>
+
+</Step>
+
+<Step title="Remove the binary">
+
+```bash
+rm -rf ~/.bolly/bin
+```
+
+</Step>
+
+<Step title="Clean your PATH">
+
+Open your shell config file (`~/.bashrc`, `~/.zshrc`, etc.) and remove the line that adds `~/.bolly/bin` to your PATH.
+
+</Step>
+
+<Step title="Remove data (optional)">
+
+<Warning>This permanently deletes all Bolly data including memories, conversations, config, and drops.</Warning>
+
+```bash
+rm -rf ~/.bolly
+```
+
+</Step>
+</Steps>
+
+## Uninstalling other methods
+
+| Installation method | How to uninstall |
+|---------------------|-----------------|
+| **Docker** | `docker compose down -v` or `docker rm -f bolly` |
+| **Desktop App** | Drag to Trash (macOS), uninstall from Settings (Windows/Linux) |
+| **From Source** | Remove the cloned repo and `~/.bolly/` directory |

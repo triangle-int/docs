@@ -119,60 +119,17 @@ To update Bolly to the latest version, run the install script again:
 curl -fsSL https://bollyai.dev/install.sh | bash
 ```
 
-The script detects existing installations and performs an in-place upgrade while preserving your config and data.
-
-<Tip>Check the [GitHub releases](https://github.com/triangle-int/bolly/releases) page to see what's new in each version.</Tip>
+The script detects existing installations and performs an in-place upgrade while preserving your config and data. See the [full updating guide](/installation/updating) for the built-in update command and release channels.
 
 ## Uninstalling
 
-To remove Bolly completely:
-
-<Steps>
-<Step title="Stop the service">
-
-<CodeGroup>
-
-```bash Linux
-sudo systemctl stop bolly
-sudo systemctl disable bolly
-```
-
-```bash macOS
-launchctl unload ~/Library/LaunchAgents/dev.bollyai.bolly.plist
-```
-
-</CodeGroup>
-
-</Step>
-
-<Step title="Remove the binary and service files">
-
-<CodeGroup>
-
-```bash Linux
-sudo rm /usr/local/bin/bolly
-sudo rm /etc/systemd/system/bolly.service
-sudo systemctl daemon-reload
-```
-
-```bash macOS
-rm ~/Library/LaunchAgents/dev.bollyai.bolly.plist
-```
-
-</CodeGroup>
-
-</Step>
-
-<Step title="Remove data (optional)">
-
-<Warning>This permanently deletes all Bolly data including memory, conversations, and drops.</Warning>
+Run the uninstall script to remove Bolly:
 
 ```bash
-rm -rf ~/.bolly
+curl -fsSL https://bollyai.dev/uninstall.sh | bash
 ```
 
-</Step>
-</Steps>
+This stops the service, removes the binary and service files, and cleans up your PATH. See the [full uninstall guide](/installation/uninstall) for options like keeping your data.
 
 ## Next steps
 

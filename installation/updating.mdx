@@ -1,0 +1,134 @@
+---
+title: "Updating"
+description: "Keep Bolly up to date across all installation methods"
+icon: "arrows-rotate"
+---
+
+## One-line install
+
+The simplest way to update is to run the install script again:
+
+```bash
+curl -fsSL https://bollyai.dev/install.sh | bash
+```
+
+The script detects your existing installation and performs an in-place upgrade. Your config, memories, conversations, and drops are preserved.
+
+### Built-in update command
+
+The installer also creates a lightweight update script at `~/.bolly/bin/update`. It checks whether a newer version is available and downloads it in place:
+
+```bash
+~/.bolly/bin/update
+```
+
+After updating, restart the service to apply:
+
+<CodeGroup>
+
+```bash Linux (systemd)
+sudo systemctl restart bolly
+```
+
+```bash macOS (launchd)
+launchctl unload ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+```
+
+</CodeGroup>
+
+### Check your current version
+
+```bash
+cat ~/.bolly/bin/.version
+```
+
+## Docker
+
+Pull the latest image and recreate the container:
+
+<CodeGroup>
+
+```bash Docker Compose
+docker compose pull
+docker compose up -d
+```
+
+```bash Docker CLI
+docker pull ghcr.io/triangle-int/bolly:latest
+docker rm -f bolly
+docker run -d \
+  --name bolly \
+  -p 8080:8080 \
+  -v bolly-data:/data \
+  -e BOLLY_HOME=/data \
+  --restart always \
+  ghcr.io/triangle-int/bolly:latest
+```
+
+</CodeGroup>
+
+<Tip>Your data is stored in the `bolly-data` volume and persists across container updates.</Tip>
+
+The Docker entrypoint also checks for updates on each container start. To pin a specific version, replace `:latest` with a version tag (e.g., `ghcr.io/triangle-int/bolly:0.24.0`).
+
+## Desktop app
+
+The desktop app checks for updates automatically. When a new version is available, you'll see a notification in the app.
+
+You can also manually download the latest version from the [releases page](https://github.com/triangle-int/bolly/releases).
+
+## From source
+
+Pull the latest changes and rebuild:
+
+```bash
+cd bolly
+git pull origin main
+
+# Rebuild the client
+cd client
+pnpm install
+pnpm build
+
+# Rebuild the server
+cd ../server
+cargo build --release
+```
+
+Then restart Bolly to use the new build.
+
+## Release channels
+
+Bolly supports two release channels:
+
+| Channel | Description | Stability |
+|---------|-------------|-----------|
+| **stable** | Default. Published releases only. | Production-ready |
+| **nightly** | Latest builds from `main`. Updated frequently. | May contain bugs |
+
+### Switch to nightly
+
+Set `BOLLY_CHANNEL=nightly` when installing or updating:
+
+```bash
+BOLLY_CHANNEL=nightly curl -fsSL https://bollyai.dev/install.sh | bash
+```
+
+Or when using the built-in update command:
+
+```bash
+BOLLY_CHANNEL=nightly ~/.bolly/bin/update
+```
+
+### Switch back to stable
+
+```bash
+BOLLY_CHANNEL=stable curl -fsSL https://bollyai.dev/install.sh | bash
+```
+
+<Warning>Nightly builds are built from the latest code and may contain breaking changes or bugs. Use stable for production.</Warning>
+
+## What's new
+
+Check the [GitHub releases](https://github.com/triangle-int/bolly/releases) page to see changelogs for each version.

@@ -89,25 +89,11 @@ docker rm -f bolly
 Pull the latest image and recreate the container:
 
 ```bash
-docker pull ghcr.io/triangle-int/bolly:latest
-docker rm -f bolly
-docker run -d \
-  --name bolly \
-  -p 8080:8080 \
-  -v bolly-data:/data \
-  -e BOLLY_HOME=/data \
-  --restart always \
-  ghcr.io/triangle-int/bolly:latest
-```
-
-With Docker Compose:
-
-```bash
 docker compose pull
 docker compose up -d
 ```
 
-<Tip>Your data is stored in the `bolly-data` volume and persists across container updates.</Tip>
+Your data is stored in the `bolly-data` volume and persists across updates. See the [full updating guide](/installation/updating) for version pinning and release channels.
 
 ## Custom port
 

@@ -43,6 +43,8 @@
           {
             "group": "Help",
             "pages": [
+              "installation/updating",
+              "installation/uninstall",
               "installation/troubleshooting"
             ]
           }
