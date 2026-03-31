@@ -7,138 +7,62 @@ description: "Learn how to install, configure, and use Bolly — your open-sourc
 
 Bolly is an open-source AI companion with persistent memory, computer use capabilities, and creative autonomy. Not a chatbot — a presence that remembers your goals, notices your mood, helps you work, and checks in when you've been quiet too long.
 
-<Card
-  title="Quick Install"
-  icon="bolt"
-  href="/installation/quick-install"
-  horizontal
->
-  Get Bolly running in under a minute with a single command.
-</Card>
+## Get started
 
-## Choose your path
+```bash
+curl -fsSL https://bollyai.dev/install.sh | bash
+```
 
-<CardGroup cols={2}>
-  <Card
-    title="One-Line Install"
-    icon="terminal"
-    href="/installation/quick-install"
-  >
-    Install via curl on Linux or macOS. The fastest way to get started.
-  </Card>
+Then open [http://localhost:26559](http://localhost:26559) — Bolly will walk you through setup in the browser. Works with an **Anthropic API key** or a **Claude Pro/Max subscription**.
+
+<CardGroup cols={3}>
   <Card
     title="Docker"
     icon="docker"
     href="/installation/docker"
   >
-    Run Bolly in a container with persistent storage and auto-restart.
+    Run in a container.
   </Card>
   <Card
     title="Desktop App"
     icon="desktop"
     href="/installation/desktop-app"
   >
-    Download the native app for macOS, Windows, or Linux with computer use support.
+    Native app with computer use.
   </Card>
   <Card
-    title="Build from Source"
+    title="From Source"
     icon="code-branch"
     href="/installation/from-source"
   >
-    Clone the repo and build the server, client, and desktop app yourself.
+    Build it yourself.
   </Card>
 </CardGroup>
 
-## Explore features
+## Key features
 
 <CardGroup cols={2}>
-  <Card
-    title="Memory"
-    icon="brain"
-    href="/features/memory"
-  >
-    Persistent memory with keyword and semantic search. Bolly remembers across sessions.
+  <Card title="Memory" icon="brain" href="/features/memory">
+    Persistent memory with keyword and semantic search across sessions.
   </Card>
-  <Card
-    title="Mood"
-    icon="face-smile"
-    href="/features/mood"
-  >
-    26 emotional states that shift based on conversation context.
+  <Card title="Heartbeat" icon="heart-pulse" href="/features/heartbeat">
+    Autonomous wake cycles for reflection, mood updates, and creative drops.
   </Card>
-  <Card
-    title="Heartbeat"
-    icon="heart-pulse"
-    href="/features/heartbeat"
-  >
-    Autonomous wake cycles for reflection, mood updates, and creative output.
+  <Card title="Computer Use" icon="display" href="/features/computer-use">
+    Screenshots, keyboard, mouse, bash — full desktop control.
   </Card>
-  <Card
-    title="Drops"
-    icon="droplet"
-    href="/features/drops"
-  >
-    Poems, ideas, reflections — creative artifacts generated during idle cycles.
-  </Card>
-  <Card
-    title="Computer Use"
-    icon="display"
-    href="/features/computer-use"
-  >
-    Screenshots, keyboard, mouse, bash — full desktop control via the desktop app.
-  </Card>
-  <Card
-    title="50+ Tools"
-    icon="wrench"
-    href="/features/tools"
-  >
+  <Card title="50+ Tools" icon="wrench" href="/features/tools">
     Files, shell, web, email, calendar, Drive, and more.
   </Card>
-  <Card
-    title="Voice"
-    icon="volume-high"
-    href="/features/voice"
-  >
-    Text-to-speech output powered by ElevenLabs.
-  </Card>
-  <Card
-    title="Integrations"
-    icon="plug"
-    href="/features/integrations"
-  >
-    Email, Google Calendar, Google Drive, MCP servers.
-  </Card>
 </CardGroup>
 
-## After installation
+## Next steps
 
 <CardGroup cols={2}>
-  <Card
-    title="Configuration"
-    icon="gear"
-    href="/installation/configuration"
-  >
+  <Card title="Configuration" icon="gear" href="/installation/configuration">
     Customize personality, heartbeat, memory, and more.
   </Card>
-  <Card
-    title="API Keys"
-    icon="key"
-    href="/installation/api-keys"
-  >
-    Set up Anthropic and optional integrations.
-  </Card>
-  <Card
-    title="Skills"
-    icon="puzzle-piece"
-    href="/features/skills"
-  >
-    Extend Bolly with installable plugins.
-  </Card>
-  <Card
-    title="Multiple Instances"
-    icon="users"
-    href="/features/instances"
-  >
-    Run separate personalities with isolated memory and config.
+  <Card title="All Features" icon="sparkles" href="/features/memory">
+    Explore memory, mood, drops, voice, integrations, and skills.
   </Card>
 </CardGroup>

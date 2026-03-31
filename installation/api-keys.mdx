@@ -4,13 +4,11 @@ description: "Set up API keys for Anthropic, Google AI, ElevenLabs, and other in
 icon: "key"
 ---
 
-Bolly uses a **BYOK** (Bring Your Own Key) model — you provide your own API keys. This means your conversations go directly to the providers, and Bolly never routes your data through third-party servers.
+During the onboarding flow in Bolly's web interface you'll choose one of two ways to connect to Claude. No need to edit config files — everything is set up in the browser.
 
-<Info>You enter all API keys through Bolly's web interface — just open your browser and follow the setup flow. No need to edit config files manually.</Info>
+## Option 1: Anthropic API Key
 
-## Required: Anthropic
-
-Anthropic's Claude is Bolly's underlying LLM. This key is **required** for Bolly to function.
+The standard approach — you provide your own API key and pay per usage.
 
 <Steps>
 <Step title="Create an Anthropic account">
@@ -26,13 +24,13 @@ Anthropic's Claude is Bolly's underlying LLM. This key is **required** for Bolly
 </Step>
 
 <Step title="Enter the key in Bolly">
-  Open Bolly in your browser at [http://localhost:26559](http://localhost:26559). The setup flow will prompt you for your API key.
+  Open Bolly in your browser at [http://localhost:26559](http://localhost:26559). The onboarding flow will prompt you for your API key.
 </Step>
 </Steps>
 
 <Warning>Keep your API key secret. Never share it or commit it to version control. Bolly stores it locally on your machine.</Warning>
 
-### Anthropic pricing considerations
+### Pricing considerations
 
 Bolly uses Claude for all conversations, reasoning, and tool use. Costs depend on:
 
@@ -42,6 +40,24 @@ Bolly uses Claude for all conversations, reasoning, and tool use. Costs depend o
 - **Memory operations** — search and retrieval use the API
 
 <Tip>Start with $10-20 in credits and monitor usage through the [Anthropic dashboard](https://console.anthropic.com/settings/billing).</Tip>
+
+## Option 2: Claude Pro / Max Subscription
+
+If you have an active **Claude Pro** or **Claude Max** subscription, you can use it instead of an API key. Under the hood Bolly emulates Claude Code, which is included in Pro and Max plans.
+
+<Steps>
+<Step title="Select subscription mode in onboarding">
+  When Bolly asks how you'd like to connect, choose **Claude Subscription**.
+</Step>
+
+<Step title="Log in to your Claude account">
+  Follow the authentication flow to link your Pro or Max subscription.
+</Step>
+</Steps>
+
+<Warning>
+  Using a subscription is **at your own risk**. In theory everything should work fine since Bolly emulates the Claude Code interface, but this is not an officially supported use case by Anthropic. Your account is subject to Anthropic's terms of service.
+</Warning>
 
 ## Optional: Google AI
 

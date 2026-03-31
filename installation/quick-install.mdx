@@ -23,34 +23,16 @@ This script will:
 
 <Info>The install script is open source. You can [review it on GitHub](https://github.com/triangle-int/bolly) before running.</Info>
 
-## Start and set up
+## Open Bolly
 
-<Steps>
-<Step title="Start the service">
+The install script starts the service automatically. Open [http://localhost:26559](http://localhost:26559) in your browser — Bolly will guide you through the initial setup.
 
-<CodeGroup>
+During onboarding you'll choose how to connect to Claude:
 
-```bash Linux (systemd)
-sudo systemctl start bolly
-sudo systemctl enable bolly  # auto-start on boot
-```
+- **API Key** — bring your own key from [console.anthropic.com](https://console.anthropic.com). Pay per usage.
+- **Claude Pro / Max subscription** — use your existing subscription instead of an API key.
 
-```bash macOS (launchd)
-launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
-```
-
-</CodeGroup>
-
-</Step>
-
-<Step title="Open Bolly in your browser">
-
-Go to [http://localhost:26559](http://localhost:26559). Bolly will guide you through the initial setup — including entering your API key — directly in the web interface.
-
-<Info>You'll need an Anthropic API key. Get one at [console.anthropic.com](https://console.anthropic.com) if you don't have one yet.</Info>
-
-</Step>
-</Steps>
+<Info>See the [API Keys guide](/installation/api-keys) for details on both options.</Info>
 
 ## Managing the service
 

@@ -14,37 +14,17 @@ Run the one-line installer on Linux or macOS:
 curl -fsSL https://bollyai.dev/install.sh | bash
 ```
 
-This downloads the latest binary, creates your config directory at `~/.bolly/`, and sets up a background service.
+This downloads the latest binary, creates your config directory at `~/.bolly/`, and starts the service automatically.
 
 <Tip>On macOS, you can also download the [Desktop App](https://github.com/triangle-int/bolly/releases) for a native experience with computer use support.</Tip>
 
 </Step>
 
-<Step title="Start Bolly">
-
-<CodeGroup>
-
-```bash Linux
-sudo systemctl start bolly
-```
-
-```bash macOS
-launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
-```
-
-```bash Docker
-docker run -d --name bolly -p 26559:26559 -v bolly-data:/data -e BOLLY_HOME=/data --restart always ghcr.io/triangle-int/bolly:latest
-```
-
-</CodeGroup>
-
-</Step>
-
 <Step title="Open your browser">
 
-Go to [http://localhost:26559](http://localhost:26559). Bolly will walk you through setup — including entering your Anthropic API key — right in the browser.
+Go to [http://localhost:26559](http://localhost:26559). Bolly will walk you through setup right in the browser — you'll choose between an **Anthropic API key** or a **Claude Pro/Max subscription**.
 
-<Info>You'll need an Anthropic API key to use Bolly. Get one at [console.anthropic.com](https://console.anthropic.com) if you don't have one yet.</Info>
+<Info>See the [API Keys guide](/installation/api-keys) for details on both options.</Info>
 
 </Step>
 </Steps>
