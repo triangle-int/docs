@@ -6,29 +6,17 @@ icon: "wrench"
 
 ## Viewing logs
 
-The first step when debugging any issue is to check the logs. How you access them depends on your platform and installation method:
+The first step when debugging any issue is to check the logs:
 
-<CodeGroup>
-
-```bash macOS (one-line install)
-tail -f ~/.bolly/bolly.log
+```bash
+bolly logs
 ```
 
-```bash Linux (systemd, root)
-sudo journalctl -u bolly -f
-```
+This streams logs in real time. Press `Ctrl+C` to stop.
 
-```bash Linux (systemd, user)
-journalctl --user -u bolly -f
-```
+For Docker installations, use `docker logs bolly -f` instead.
 
-```bash Docker
-docker logs bolly -f
-```
-
-</CodeGroup>
-
-<Tip>The `-f` flag streams logs in real time. Press `Ctrl+C` to stop. If you installed Bolly to a custom directory, replace `~/.bolly` with your `BOLLY_DIR` path.</Tip>
+<Tip>If you installed Bolly to a custom directory, set `BOLLY_HOME` before running CLI commands.</Tip>
 
 ## Installation issues
 

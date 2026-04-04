@@ -27,71 +27,43 @@ This script will:
 
 The install script starts the service automatically. Open [http://localhost:26559](http://localhost:26559) in your browser — Bolly will guide you through the initial setup.
 
-During onboarding you'll choose how to connect to Claude:
+During onboarding you'll choose your AI provider:
 
-- **API Key** — bring your own key from [console.anthropic.com](https://console.anthropic.com). Pay per usage.
-- **Claude Pro / Max subscription** — use your existing subscription instead of an API key.
+- **API Key** — bring your own Anthropic key from [console.anthropic.com](https://console.anthropic.com). Pay per usage.
+- **Claude Code** — use your Claude subscription via OAuth login. Requires [extra usage](https://console.anthropic.com/settings/billing) enabled.
+- **OpenAI** — bring your own OpenAI key. Pay per usage.
+- **Codex** — use your ChatGPT subscription via BYOKEY proxy.
 
-<Info>See the [API Keys guide](/installation/api-keys) for details on both options.</Info>
+<Info>See the [API Keys guide](/installation/api-keys) for details on all options.</Info>
 
 ## Managing the service
 
 ### Check status
 
-<CodeGroup>
-
-```bash Linux
-sudo systemctl status bolly
+```bash
+bolly status
 ```
-
-```bash macOS
-launchctl list | grep bolly
-```
-
-</CodeGroup>
 
 ### Stop the service
 
-<CodeGroup>
-
-```bash Linux
-sudo systemctl stop bolly
+```bash
+bolly stop
 ```
 
-```bash macOS
-launchctl unload ~/Library/LaunchAgents/dev.bollyai.bolly.plist
+### Start / restart
+
+```bash
+bolly start
+bolly restart
 ```
-
-</CodeGroup>
-
-### Restart
-
-<CodeGroup>
-
-```bash Linux
-sudo systemctl restart bolly
-```
-
-```bash macOS
-launchctl unload ~/Library/LaunchAgents/dev.bollyai.bolly.plist
-launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
-```
-
-</CodeGroup>
 
 ### View logs
 
-<CodeGroup>
-
-```bash Linux
-sudo journalctl -u bolly -f
+```bash
+bolly logs
 ```
 
-```bash macOS
-tail -f ~/.bolly/bolly.log
-```
-
-</CodeGroup>
+<Info>The `bolly` CLI wraps platform-specific service management (`launchd` on macOS, `systemd` on Linux) so you don't have to remember the underlying commands.</Info>
 
 ## Updating
 

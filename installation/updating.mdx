@@ -30,18 +30,9 @@ The installer also creates a lightweight update script at `~/.bolly/bin/update`.
 
 After updating, restart the service to apply:
 
-<CodeGroup>
-
-```bash Linux (systemd)
-sudo systemctl restart bolly
+```bash
+bolly restart
 ```
-
-```bash macOS (launchd)
-launchctl unload ~/Library/LaunchAgents/dev.bollyai.bolly.plist
-launchctl load ~/Library/LaunchAgents/dev.bollyai.bolly.plist
-```
-
-</CodeGroup>
 
 ### Check your current version
 
